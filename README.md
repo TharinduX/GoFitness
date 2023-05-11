@@ -1,3 +1,5 @@
+![go-fitness](https://github.com/TharinduX/GoFitness/assets/35922615/5d92db7b-d5f4-44f6-8ff7-0aacb1ee8505)
+
 # GoFitness
 
 The GoFitness App is an iOS application designed to help users set up a personalized fitness routine and track their workout performance. It allows users to input their fitness goals, such as weight loss or muscle building, and provides them with exercise recommendations based on their goals. Users can track their sets, reps, and weights, and monitor their progress over time. The app also offers reminders to complete workouts based on the user's chosen schedule.
