@@ -15,11 +15,13 @@
 		81F4F6CD2A0B893B0085A0EB /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6CC2A0B893B0085A0EB /* WelcomeViewController.swift */; };
 		81F4F6D02A0B89B10085A0EB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6CF2A0B89B10085A0EB /* HomeViewController.swift */; };
 		81F4F6D22A0B8A250085A0EB /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6D12A0B8A250085A0EB /* TabBarViewController.swift */; };
-		81F4F6D42A0B8A520085A0EB /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6D32A0B8A520085A0EB /* DetailsViewController.swift */; };
+		81F4F6D42A0B8A520085A0EB /* ExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6D32A0B8A520085A0EB /* ExerciseViewController.swift */; };
 		81F4F6D92A0B8AA00085A0EB /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6D82A0B8AA00085A0EB /* CustomViewController.swift */; };
 		81F4F6DB2A0B8AE00085A0EB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6DA2A0B8AE00085A0EB /* SettingsViewController.swift */; };
 		81F4F6DD2A0B8B4B0085A0EB /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6DC2A0B8B4B0085A0EB /* AuthManager.swift */; };
 		81F4F6DF2A0B8B600085A0EB /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6DE2A0B8B600085A0EB /* APICaller.swift */; };
+		81F4F6E12A0B8C9C0085A0EB /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6E02A0B8C9C0085A0EB /* Exercise.swift */; };
+		81F4F6E32A0B8CB10085A0EB /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6E22A0B8CB10085A0EB /* UserProfile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,11 +35,13 @@
 		81F4F6CC2A0B893B0085A0EB /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		81F4F6CF2A0B89B10085A0EB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		81F4F6D12A0B8A250085A0EB /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		81F4F6D32A0B8A520085A0EB /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		81F4F6D32A0B8A520085A0EB /* ExerciseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewController.swift; sourceTree = "<group>"; };
 		81F4F6D82A0B8AA00085A0EB /* CustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		81F4F6DA2A0B8AE00085A0EB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		81F4F6DC2A0B8B4B0085A0EB /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		81F4F6DE2A0B8B600085A0EB /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		81F4F6E02A0B8C9C0085A0EB /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
+		81F4F6E22A0B8CB10085A0EB /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,8 @@
 		81F4F6C72A0B855E0085A0EB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				81F4F6E02A0B8C9C0085A0EB /* Exercise.swift */,
+				81F4F6E22A0B8CB10085A0EB /* UserProfile.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -144,9 +150,9 @@
 		81F4F6CE2A0B89480085A0EB /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				81F4F6CF2A0B89B10085A0EB /* HomeViewController.swift */,
 				81F4F6D12A0B8A250085A0EB /* TabBarViewController.swift */,
-				81F4F6D32A0B8A520085A0EB /* DetailsViewController.swift */,
+				81F4F6CF2A0B89B10085A0EB /* HomeViewController.swift */,
+				81F4F6D32A0B8A520085A0EB /* ExerciseViewController.swift */,
 				81F4F6D82A0B8AA00085A0EB /* CustomViewController.swift */,
 			);
 			path = Core;
@@ -227,12 +233,14 @@
 				81D7D0D82A0B6706005E2937 /* AuthViewController.swift in Sources */,
 				81F4F6CD2A0B893B0085A0EB /* WelcomeViewController.swift in Sources */,
 				81D7D0D42A0B6706005E2937 /* AppDelegate.swift in Sources */,
-				81F4F6D42A0B8A520085A0EB /* DetailsViewController.swift in Sources */,
+				81F4F6E12A0B8C9C0085A0EB /* Exercise.swift in Sources */,
+				81F4F6D42A0B8A520085A0EB /* ExerciseViewController.swift in Sources */,
 				81F4F6D22A0B8A250085A0EB /* TabBarViewController.swift in Sources */,
 				81D7D0D62A0B6706005E2937 /* SceneDelegate.swift in Sources */,
 				81F4F6DF2A0B8B600085A0EB /* APICaller.swift in Sources */,
 				81F4F6DB2A0B8AE00085A0EB /* SettingsViewController.swift in Sources */,
 				81F4F6DD2A0B8B4B0085A0EB /* AuthManager.swift in Sources */,
+				81F4F6E32A0B8CB10085A0EB /* UserProfile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
