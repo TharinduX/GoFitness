@@ -7,11 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8113331E2A114E7300F6A1B2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8113331D2A114E7300F6A1B2 /* SnapKit */; };
+		813F09992A121933007CB91B /* UITextField+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813F09982A121933007CB91B /* UITextField+Additions.swift */; };
 		81D7D0D42A0B6706005E2937 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D7D0D32A0B6706005E2937 /* AppDelegate.swift */; };
 		81D7D0D62A0B6706005E2937 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D7D0D52A0B6706005E2937 /* SceneDelegate.swift */; };
 		81D7D0D82A0B6706005E2937 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D7D0D72A0B6706005E2937 /* AuthViewController.swift */; };
 		81D7D0DD2A0B6708005E2937 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81D7D0DC2A0B6708005E2937 /* Assets.xcassets */; };
 		81D7D0E02A0B6708005E2937 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81D7D0DE2A0B6708005E2937 /* LaunchScreen.storyboard */; };
+		81E15CC32A116CCE0011756B /* IntegralCF-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 81E15CC12A116CCE0011756B /* IntegralCF-Regular.otf */; };
+		81E15CC42A116CCE0011756B /* IntegralCF-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 81E15CC22A116CCE0011756B /* IntegralCF-Bold.otf */; };
+		81E15CC92A116E440011756B /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81E15CC52A116E440011756B /* OpenSans-SemiBold.ttf */; };
+		81E15CCA2A116E440011756B /* OpenSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81E15CC62A116E440011756B /* OpenSans-Medium.ttf */; };
+		81E15CCB2A116E440011756B /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81E15CC72A116E440011756B /* OpenSans-Regular.ttf */; };
+		81E15CCC2A116E440011756B /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81E15CC82A116E440011756B /* OpenSans-Bold.ttf */; };
 		81F4F6CD2A0B893B0085A0EB /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6CC2A0B893B0085A0EB /* WelcomeViewController.swift */; };
 		81F4F6D02A0B89B10085A0EB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6CF2A0B89B10085A0EB /* HomeViewController.swift */; };
 		81F4F6D22A0B8A250085A0EB /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6D12A0B8A250085A0EB /* TabBarViewController.swift */; };
@@ -25,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		813F09982A121933007CB91B /* UITextField+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Additions.swift"; sourceTree = "<group>"; };
 		81D7D0D02A0B6706005E2937 /* GoFitness.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoFitness.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81D7D0D32A0B6706005E2937 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81D7D0D52A0B6706005E2937 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -32,6 +41,12 @@
 		81D7D0DC2A0B6708005E2937 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		81D7D0DF2A0B6708005E2937 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		81D7D0E12A0B6708005E2937 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81E15CC12A116CCE0011756B /* IntegralCF-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "IntegralCF-Regular.otf"; path = "../../../../../../Downloads/Integral CF v1.1.1w/OTF/IntegralCF-Regular.otf"; sourceTree = "<group>"; };
+		81E15CC22A116CCE0011756B /* IntegralCF-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "IntegralCF-Bold.otf"; path = "../../../../../../Downloads/Integral CF v1.1.1w/OTF/IntegralCF-Bold.otf"; sourceTree = "<group>"; };
+		81E15CC52A116E440011756B /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-SemiBold.ttf"; path = "../../../../../../Downloads/Open_Sans/static/OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		81E15CC62A116E440011756B /* OpenSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Medium.ttf"; path = "../../../../../../Downloads/Open_Sans/static/OpenSans-Medium.ttf"; sourceTree = "<group>"; };
+		81E15CC72A116E440011756B /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Regular.ttf"; path = "../../../../../../Downloads/Open_Sans/static/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		81E15CC82A116E440011756B /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Bold.ttf"; path = "../../../../../../Downloads/Open_Sans/static/OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		81F4F6CC2A0B893B0085A0EB /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		81F4F6CF2A0B89B10085A0EB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		81F4F6D12A0B8A250085A0EB /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -49,12 +64,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8113331E2A114E7300F6A1B2 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		813F09932A121473007CB91B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				813F09952A12148D007CB91B /* Extensions */,
+				81F4F6C92A0B85B90085A0EB /* Managers */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		813F09952A12148D007CB91B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				813F09982A121933007CB91B /* UITextField+Additions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		81D7D0C72A0B6706005E2937 = {
 			isa = PBXGroup;
 			children = (
@@ -74,8 +107,8 @@
 		81D7D0D22A0B6706005E2937 /* GoFitness */ = {
 			isa = PBXGroup;
 			children = (
+				813F09932A121473007CB91B /* Helpers */,
 				81F4F6CA2A0B85C40085A0EB /* Resources */,
-				81F4F6C92A0B85B90085A0EB /* Managers */,
 				81F4F6C82A0B85B00085A0EB /* ViewModels */,
 				81F4F6C72A0B855E0085A0EB /* Models */,
 				81F4F6C62A0B854D0085A0EB /* Views */,
@@ -83,6 +116,19 @@
 				81D7D0E12A0B6708005E2937 /* Info.plist */,
 			);
 			path = GoFitness;
+			sourceTree = "<group>";
+		};
+		81E15CBC2A116C9A0011756B /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				81E15CC22A116CCE0011756B /* IntegralCF-Bold.otf */,
+				81E15CC12A116CCE0011756B /* IntegralCF-Regular.otf */,
+				81E15CC82A116E440011756B /* OpenSans-Bold.ttf */,
+				81E15CC62A116E440011756B /* OpenSans-Medium.ttf */,
+				81E15CC72A116E440011756B /* OpenSans-Regular.ttf */,
+				81E15CC52A116E440011756B /* OpenSans-SemiBold.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		81F4F6C52A0B853F0085A0EB /* Controllers */ = {
@@ -130,6 +176,7 @@
 		81F4F6CA2A0B85C40085A0EB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				81E15CBC2A116C9A0011756B /* Fonts */,
 				81D7D0DC2A0B6708005E2937 /* Assets.xcassets */,
 				81D7D0D32A0B6706005E2937 /* AppDelegate.swift */,
 				81D7D0D52A0B6706005E2937 /* SceneDelegate.swift */,
@@ -174,6 +221,9 @@
 			dependencies = (
 			);
 			name = GoFitness;
+			packageProductDependencies = (
+				8113331D2A114E7300F6A1B2 /* SnapKit */,
+			);
 			productName = GoFitness;
 			productReference = 81D7D0D02A0B6706005E2937 /* GoFitness.app */;
 			productType = "com.apple.product-type.application";
@@ -202,6 +252,9 @@
 				Base,
 			);
 			mainGroup = 81D7D0C72A0B6706005E2937;
+			packageReferences = (
+				8113331C2A114E7300F6A1B2 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 81D7D0D12A0B6706005E2937 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -216,8 +269,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81E15CCA2A116E440011756B /* OpenSans-Medium.ttf in Resources */,
+				81E15CC32A116CCE0011756B /* IntegralCF-Regular.otf in Resources */,
+				81E15CCC2A116E440011756B /* OpenSans-Bold.ttf in Resources */,
 				81D7D0E02A0B6708005E2937 /* LaunchScreen.storyboard in Resources */,
+				81E15CCB2A116E440011756B /* OpenSans-Regular.ttf in Resources */,
+				81E15CC92A116E440011756B /* OpenSans-SemiBold.ttf in Resources */,
 				81D7D0DD2A0B6708005E2937 /* Assets.xcassets in Resources */,
+				81E15CC42A116CCE0011756B /* IntegralCF-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +294,7 @@
 				81D7D0D42A0B6706005E2937 /* AppDelegate.swift in Sources */,
 				81F4F6E12A0B8C9C0085A0EB /* Exercise.swift in Sources */,
 				81F4F6D42A0B8A520085A0EB /* ExerciseViewController.swift in Sources */,
+				813F09992A121933007CB91B /* UITextField+Additions.swift in Sources */,
 				81F4F6D22A0B8A250085A0EB /* TabBarViewController.swift in Sources */,
 				81D7D0D62A0B6706005E2937 /* SceneDelegate.swift in Sources */,
 				81F4F6DF2A0B8B600085A0EB /* APICaller.swift in Sources */,
@@ -448,6 +508,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8113331C2A114E7300F6A1B2 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8113331D2A114E7300F6A1B2 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8113331C2A114E7300F6A1B2 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 81D7D0C82A0B6706005E2937 /* Project object */;
 }
