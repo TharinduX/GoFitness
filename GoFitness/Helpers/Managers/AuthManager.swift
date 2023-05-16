@@ -1,34 +1,30 @@
-//
-//  AuthManager.swift
-//  GoFitness
-//
-//  Created by Tharindu on 2023-05-10.
-//
-
 import Foundation
+import Firebase
 
 final class AuthManager {
     static let shared = AuthManager()
     
-    private init () {}
+    private init() {}
     
     var isSignedIn: Bool {
-        return false
+        return Auth.auth().currentUser != nil
     }
     
     private var accessToken: String? {
-        return nil
+        return Auth.auth().currentUser?.uid
     }
     
-    private var refreshToken: String? {
-        return nil
+    func authenticate(withEmail email: String, password: String, completion: @escaping (Error?) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { _, error in
+            completion(error)
+        }
     }
     
-    private var tokenExpirationDate: Date? {
-        return nil
-    }
-    
-    private var shouldRefreshToken: Bool {
-        return false
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("Sign out error: \(error.localizedDescription)")
+        }
     }
 }

@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		8113331E2A114E7300F6A1B2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8113331D2A114E7300F6A1B2 /* SnapKit */; };
 		813F09992A121933007CB91B /* UITextField+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813F09982A121933007CB91B /* UITextField+Additions.swift */; };
+		815561522A13724600BD9C16 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 815561512A13724500BD9C16 /* GoogleService-Info.plist */; };
+		815561552A1375CC00BD9C16 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 815561542A1375CC00BD9C16 /* FirebaseAuth */; };
+		815561572A1375CC00BD9C16 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 815561562A1375CC00BD9C16 /* FirebaseFirestore */; };
+		815561592A1375CC00BD9C16 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 815561582A1375CC00BD9C16 /* FirebaseFirestoreSwift */; };
+		8155615B2A1375CC00BD9C16 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 8155615A2A1375CC00BD9C16 /* FirebaseStorage */; };
+		818636722A13B522000BD12F /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818636712A13B522000BD12F /* RegisterViewController.swift */; };
+		81AE4C502A13F9AF005E6CAD /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AE4C4F2A13F9AF005E6CAD /* SignUpViewController.swift */; };
 		81D7D0D42A0B6706005E2937 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D7D0D32A0B6706005E2937 /* AppDelegate.swift */; };
 		81D7D0D62A0B6706005E2937 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D7D0D52A0B6706005E2937 /* SceneDelegate.swift */; };
 		81D7D0D82A0B6706005E2937 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D7D0D72A0B6706005E2937 /* AuthViewController.swift */; };
@@ -34,6 +41,9 @@
 
 /* Begin PBXFileReference section */
 		813F09982A121933007CB91B /* UITextField+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Additions.swift"; sourceTree = "<group>"; };
+		815561512A13724500BD9C16 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		818636712A13B522000BD12F /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		81AE4C4F2A13F9AF005E6CAD /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		81D7D0D02A0B6706005E2937 /* GoFitness.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoFitness.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81D7D0D32A0B6706005E2937 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81D7D0D52A0B6706005E2937 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +75,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8113331E2A114E7300F6A1B2 /* SnapKit in Frameworks */,
+				815561552A1375CC00BD9C16 /* FirebaseAuth in Frameworks */,
+				815561572A1375CC00BD9C16 /* FirebaseFirestore in Frameworks */,
+				8155615B2A1375CC00BD9C16 /* FirebaseStorage in Frameworks */,
+				815561592A1375CC00BD9C16 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +190,7 @@
 		81F4F6CA2A0B85C40085A0EB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				815561512A13724500BD9C16 /* GoogleService-Info.plist */,
 				81E15CBC2A116C9A0011756B /* Fonts */,
 				81D7D0DC2A0B6708005E2937 /* Assets.xcassets */,
 				81D7D0D32A0B6706005E2937 /* AppDelegate.swift */,
@@ -188,8 +203,9 @@
 			isa = PBXGroup;
 			children = (
 				81D7D0D72A0B6706005E2937 /* AuthViewController.swift */,
+				818636712A13B522000BD12F /* RegisterViewController.swift */,
 				81F4F6CC2A0B893B0085A0EB /* WelcomeViewController.swift */,
-				81F4F6DA2A0B8AE00085A0EB /* SettingsViewController.swift */,
+				81AE4C4F2A13F9AF005E6CAD /* SignUpViewController.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -201,6 +217,7 @@
 				81F4F6CF2A0B89B10085A0EB /* HomeViewController.swift */,
 				81F4F6D32A0B8A520085A0EB /* ExerciseViewController.swift */,
 				81F4F6D82A0B8AA00085A0EB /* CustomViewController.swift */,
+				81F4F6DA2A0B8AE00085A0EB /* SettingsViewController.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -223,6 +240,10 @@
 			name = GoFitness;
 			packageProductDependencies = (
 				8113331D2A114E7300F6A1B2 /* SnapKit */,
+				815561542A1375CC00BD9C16 /* FirebaseAuth */,
+				815561562A1375CC00BD9C16 /* FirebaseFirestore */,
+				815561582A1375CC00BD9C16 /* FirebaseFirestoreSwift */,
+				8155615A2A1375CC00BD9C16 /* FirebaseStorage */,
 			);
 			productName = GoFitness;
 			productReference = 81D7D0D02A0B6706005E2937 /* GoFitness.app */;
@@ -254,6 +275,7 @@
 			mainGroup = 81D7D0C72A0B6706005E2937;
 			packageReferences = (
 				8113331C2A114E7300F6A1B2 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				815561532A1375CC00BD9C16 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 81D7D0D12A0B6706005E2937 /* Products */;
 			projectDirPath = "";
@@ -271,6 +293,7 @@
 			files = (
 				81E15CCA2A116E440011756B /* OpenSans-Medium.ttf in Resources */,
 				81E15CC32A116CCE0011756B /* IntegralCF-Regular.otf in Resources */,
+				815561522A13724600BD9C16 /* GoogleService-Info.plist in Resources */,
 				81E15CCC2A116E440011756B /* OpenSans-Bold.ttf in Resources */,
 				81D7D0E02A0B6708005E2937 /* LaunchScreen.storyboard in Resources */,
 				81E15CCB2A116E440011756B /* OpenSans-Regular.ttf in Resources */,
@@ -293,9 +316,11 @@
 				81F4F6CD2A0B893B0085A0EB /* WelcomeViewController.swift in Sources */,
 				81D7D0D42A0B6706005E2937 /* AppDelegate.swift in Sources */,
 				81F4F6E12A0B8C9C0085A0EB /* Exercise.swift in Sources */,
+				818636722A13B522000BD12F /* RegisterViewController.swift in Sources */,
 				81F4F6D42A0B8A520085A0EB /* ExerciseViewController.swift in Sources */,
 				813F09992A121933007CB91B /* UITextField+Additions.swift in Sources */,
 				81F4F6D22A0B8A250085A0EB /* TabBarViewController.swift in Sources */,
+				81AE4C502A13F9AF005E6CAD /* SignUpViewController.swift in Sources */,
 				81D7D0D62A0B6706005E2937 /* SceneDelegate.swift in Sources */,
 				81F4F6DF2A0B8B600085A0EB /* APICaller.swift in Sources */,
 				81F4F6DB2A0B8AE00085A0EB /* SettingsViewController.swift in Sources */,
@@ -442,6 +467,8 @@
 				DEVELOPMENT_TEAM = 4U78P24H2F;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GoFitness/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GoFitness;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -453,6 +480,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.tharindu.GoFitness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -469,6 +499,8 @@
 				DEVELOPMENT_TEAM = 4U78P24H2F;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GoFitness/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GoFitness;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -480,6 +512,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.tharindu.GoFitness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -518,6 +553,14 @@
 				minimumVersion = 5.6.0;
 			};
 		};
+		815561532A1375CC00BD9C16 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.9.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -525,6 +568,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8113331C2A114E7300F6A1B2 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		815561542A1375CC00BD9C16 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 815561532A1375CC00BD9C16 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		815561562A1375CC00BD9C16 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 815561532A1375CC00BD9C16 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		815561582A1375CC00BD9C16 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 815561532A1375CC00BD9C16 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+		8155615A2A1375CC00BD9C16 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 815561532A1375CC00BD9C16 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
