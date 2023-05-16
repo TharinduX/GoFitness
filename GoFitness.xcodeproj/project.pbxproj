@@ -14,7 +14,6 @@
 		815561572A1375CC00BD9C16 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 815561562A1375CC00BD9C16 /* FirebaseFirestore */; };
 		815561592A1375CC00BD9C16 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 815561582A1375CC00BD9C16 /* FirebaseFirestoreSwift */; };
 		8155615B2A1375CC00BD9C16 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 8155615A2A1375CC00BD9C16 /* FirebaseStorage */; };
-		818636722A13B522000BD12F /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818636712A13B522000BD12F /* RegisterViewController.swift */; };
 		81AE4C502A13F9AF005E6CAD /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AE4C4F2A13F9AF005E6CAD /* SignUpViewController.swift */; };
 		81D7D0D42A0B6706005E2937 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D7D0D32A0B6706005E2937 /* AppDelegate.swift */; };
 		81D7D0D62A0B6706005E2937 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D7D0D52A0B6706005E2937 /* SceneDelegate.swift */; };
@@ -42,7 +41,6 @@
 /* Begin PBXFileReference section */
 		813F09982A121933007CB91B /* UITextField+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Additions.swift"; sourceTree = "<group>"; };
 		815561512A13724500BD9C16 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		818636712A13B522000BD12F /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		81AE4C4F2A13F9AF005E6CAD /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		81D7D0D02A0B6706005E2937 /* GoFitness.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoFitness.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81D7D0D32A0B6706005E2937 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -203,7 +201,6 @@
 			isa = PBXGroup;
 			children = (
 				81D7D0D72A0B6706005E2937 /* AuthViewController.swift */,
-				818636712A13B522000BD12F /* RegisterViewController.swift */,
 				81F4F6CC2A0B893B0085A0EB /* WelcomeViewController.swift */,
 				81AE4C4F2A13F9AF005E6CAD /* SignUpViewController.swift */,
 			);
@@ -316,7 +313,6 @@
 				81F4F6CD2A0B893B0085A0EB /* WelcomeViewController.swift in Sources */,
 				81D7D0D42A0B6706005E2937 /* AppDelegate.swift in Sources */,
 				81F4F6E12A0B8C9C0085A0EB /* Exercise.swift in Sources */,
-				818636722A13B522000BD12F /* RegisterViewController.swift in Sources */,
 				81F4F6D42A0B8A520085A0EB /* ExerciseViewController.swift in Sources */,
 				813F09992A121933007CB91B /* UITextField+Additions.swift in Sources */,
 				81F4F6D22A0B8A250085A0EB /* TabBarViewController.swift in Sources */,
