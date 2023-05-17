@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestore
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -16,10 +19,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         if AuthManager.shared.isSignedIn {
-            window.rootViewController = TabBarViewController()
+            if let userId = Auth.auth().currentUser?.uid {
+                let userDetailsRef = Firestore.firestore().collection("userDetails")
+                userDetailsRef.whereField("userId", isEqualTo: userId).getDocuments { (snapshot, error) in
+                    if let error = error {
+                        // Error occurred, print the localized description
+                        print("Firestore Error: \(error.localizedDescription)")
+                    } else {
+                        if let snapshot = snapshot, !snapshot.isEmpty {
+                            // User details exist in Firestore, show the TabBarViewController
+                            window.rootViewController = TabBarViewController()
+                        } else {
+                            // User details don't exist in Firestore, show the UserDetailsViewController
+                            window.rootViewController = UserDetailsViewController()
+                        }
+                    }
+                }
+            } else {
+                // User ID is not available, show the UserDetailsViewController
+                window.rootViewController = UserDetailsViewController()
+            }
         }
-        else {
-            let navVC = UINavigationController(rootViewController: WelcomeViewController())
+ else {
+            let navVC = UINavigationController(rootViewController: AuthViewController())
             navVC.navigationBar.prefersLargeTitles = true
             navVC.viewControllers.first?.navigationItem.largeTitleDisplayMode = .always
             window.rootViewController = navVC

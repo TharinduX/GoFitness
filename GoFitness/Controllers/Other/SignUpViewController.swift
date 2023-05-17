@@ -1,40 +1,36 @@
 //
-//  AuthViewController.swift
+//  SignUpViewController.swift
 //  GoFitness
 //
-//  Created by Tharindu on 2023-05-10.
+//  Created by Tharindu on 2023-05-16.
 //
 
 import UIKit
 import SnapKit
 import Firebase
 
-
-class AuthViewController: UIViewController {
+class SignUpViewController: UIViewController {
     
-    // Background image view
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "bg")
+        imageView.image = UIImage(named: "signup-bg")
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         return imageView
     }()
     
-    // Subtitle label
     let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Welcome Back!"
+        label.text = "Welcome to GoFitness"
         label.font = UIFont(name: "IntegralCF-Regular", size: 20)
         label.textColor = UIColor(named: "primary")
         label.textAlignment = .left
         return label
     }()
     
-    // Title label
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Login"
+        label.text = "Sign Up"
         label.font = UIFont(name: "IntegralCF-Bold", size: 60)
         label.textColor = .white
         label.textAlignment = .left
@@ -50,7 +46,6 @@ class AuthViewController: UIViewController {
         return label
     }()
     
-    // Email text field
     let emailTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Email"
@@ -60,7 +55,6 @@ class AuthViewController: UIViewController {
         return textField
     }()
     
-    // Password text field
     let passwordTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Password"
@@ -71,10 +65,19 @@ class AuthViewController: UIViewController {
         return textField
     }()
     
-    // Login button
-    let loginButton: UIButton = {
+    let rePasswordTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Retype Password"
+        textField.font = UIFont(name: "OpenSans-Regular", size: 17)
+        textField.textColor = .white
+        textField.isSecureTextEntry = true
+        textField.addBottomBorder(color: UIColor(named: "bg-secondary") ?? .darkGray, height: 1)
+        return textField
+    }()
+    
+    let signUpButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Login", for: .normal)
+        button.setTitle("Sign Up", for: .normal)
         button.titleLabel?.font = UIFont(name: "OpenSans-SemiBold", size: 17)
         button.setTitleColor(UIColor(named: "background"), for: .normal)
         button.backgroundColor = UIColor(named: "primary")
@@ -83,10 +86,9 @@ class AuthViewController: UIViewController {
         return button
     }()
     
-    // Google login button
-    let googleLoginButton: UIButton = {
+    let googleSignUpButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Login with Google", for: .normal)
+        button.setTitle("Sign Up with Google", for: .normal)
         let googleImage = UIImage(named: "google")?.withRenderingMode(.alwaysOriginal)
         button.setImage(googleImage, for: .normal)
         button.titleLabel?.font = UIFont(name: "OpenSans-SemiBold", size: 17)
@@ -94,34 +96,21 @@ class AuthViewController: UIViewController {
         button.backgroundColor = .white
         button.layer.cornerRadius = 15
         button.layer.cornerCurve = .continuous
+        
         return button
     }()
     
-    // Forgot password label
-    let forgetPasswordLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Forgot Password?"
-        label.font = UIFont(name: "OpenSans-SemiBold", size: 13)
-        label.textColor = UIColor(named: "primary")
-        label.textAlignment = .center
-        return label
-    }()
-    
-    // Scroll view
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
     
-    // Keyboard variables
     private var keyboardHeight: CGFloat = 0
     private var isKeyboardShown = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Set up the view
         view.backgroundColor = UIColor(named: "background")
         view.addSubview(imageView)
         view.addSubview(subtitleLabel)
@@ -129,12 +118,10 @@ class AuthViewController: UIViewController {
         view.addSubview(errorLabel)
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
-        view.addSubview(loginButton)
-        view.addSubview(googleLoginButton)
-        view.addSubview(forgetPasswordLabel)
+        view.addSubview(rePasswordTextField)
+        view.addSubview(signUpButton)
+        view.addSubview(googleSignUpButton)
         
-        
-        // Configure constraints
         
         imageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
@@ -142,18 +129,17 @@ class AuthViewController: UIViewController {
         }
         
         subtitleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(235)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalToSuperview().offset(200)
+            make.leading.trailing.equalToSuperview().inset(15)
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(250)
+            make.top.equalTo(subtitleLabel.snp.bottom)
             make.leading.trailing.equalToSuperview().inset(20)
         }
         
-        
         emailTextField.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(50)
+            make.top.equalTo(imageView.snp.bottom).offset(80)
             make.leading.equalToSuperview().offset(50)
             make.trailing.equalToSuperview().offset(-50)
             make.height.equalTo(50)
@@ -170,44 +156,35 @@ class AuthViewController: UIViewController {
             make.height.equalTo(50)
         }
         
-        loginButton.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextField.snp.bottom).offset(30)
+        rePasswordTextField.snp.makeConstraints { make in
+            make.top.equalTo(passwordTextField.snp.bottom).offset(20)
+            make.leading.trailing.equalTo(emailTextField)
+            make.height.equalTo(50)
+        }
+        
+        signUpButton.snp.makeConstraints { make in
+            make.top.equalTo(rePasswordTextField.snp.bottom).offset(50)
             make.centerX.equalToSuperview()
-            make.leading.trailing.equalTo(passwordTextField)
+            make.leading.trailing.equalTo(rePasswordTextField)
             make.height.equalTo(55)
         }
         
-        googleLoginButton.snp.makeConstraints { make in
-            make.top.equalTo(loginButton.snp.bottom).offset(10)
+        googleSignUpButton.snp.makeConstraints { make in
+            make.top.equalTo(signUpButton.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
-            make.leading.trailing.equalTo(loginButton)
+            make.leading.trailing.equalTo(signUpButton)
             make.height.equalTo(55)
         }
         
-        forgetPasswordLabel.snp.makeConstraints { make in
-            make.top.equalTo(googleLoginButton.snp.bottom).offset(10)
-            make.centerX.equalToSuperview()
-            make.leading.trailing.equalTo(loginButton)
-        }
-        
-        // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
-        // Set up navigation bar
-        let signUpButton = UIBarButtonItem(title: "Sign Up", style: .plain, target: self, action: #selector(signUpButtonTapped))
-        navigationItem.rightBarButtonItem = signUpButton
-        
-        // Set up tap gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tapGesture)
         
-        // Add login button action
-        loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
-        
+        signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
     }
     
-    // Dismiss the keyboard and adjust view position if the keyboard is shown
     @objc private func handleTap() {
         view.endEditing(true)
         if isKeyboardShown {
@@ -218,27 +195,38 @@ class AuthViewController: UIViewController {
         }
     }
     
-    // Perform login with the provided email and password
-    @objc private func loginButtonTapped() {
-        guard let email = emailTextField.text, let password = passwordTextField.text else {
+    @objc private func signUpButtonTapped() {
+        var errorMessage: String
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text,
+              let rePassword = rePasswordTextField.text else {
             // Handle invalid input
             return
         }
         
-        AuthManager.shared.signIn(withEmail: email, password: password) { [weak self] error in
+        // Check if the password and rePassword match
+        guard password == rePassword else {
+            // Handle password mismatch
+            errorMessage = "Password and Re-entered Password do not match."
+            self.errorLabel.text = errorMessage
+            return
+        }
+        
+        // Call the sign-up method
+        AuthManager.shared.signUp(withEmail: email, password: password) { [weak self] error in
             if let maybeError = error {
                 let nsError = maybeError as NSError
                 if let errorCode = AuthErrorCode.Code.init(rawValue: nsError.code) {
                     var errorMessage: String
-        
+                    
                     // Handle specific error cases and provide custom error messages
                     switch errorCode {
                     case .invalidEmail:
                         errorMessage = "Invalid email address. Please enter a valid email."
-                    case .wrongPassword:
-                        errorMessage = "Incorrect password. Please try again."
-                    case .userNotFound:
-                        errorMessage = "User not found. Please sign up before logging in."
+                    case .emailAlreadyInUse:
+                        errorMessage = "Email already in use."
+                    case .weakPassword:
+                        errorMessage = "Weak password. Please choose a stronger password."
                         // Handle other error cases as needed
                     default:
                         errorMessage = "An error occurred. Please try again later."
@@ -248,10 +236,10 @@ class AuthViewController: UIViewController {
                 }
                 
             } else {
-                // Reset error label if login is successful
+                // Reset error label if sign-up is successful
                 self?.errorLabel.text = nil
                 
-                // Login successful
+                // Sign up successful
                 let homeVC = TabBarViewController()
                 let navController = UINavigationController(rootViewController: homeVC)
                 navController.modalPresentationStyle = .fullScreen
@@ -260,13 +248,6 @@ class AuthViewController: UIViewController {
         }
     }
     
-    // Push the sign-up view controller onto the navigation stack
-    @objc private func signUpButtonTapped() {
-        let SignUpVC = SignUpViewController()
-        self.navigationController?.pushViewController(SignUpVC, animated: true)
-    }
-    
-    // Adjust the view position when the keyboard is shown
     @objc private func keyboardWillShow(_ notification: Notification) {
         guard let keyboardSize = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
             return
@@ -281,7 +262,6 @@ class AuthViewController: UIViewController {
         }
     }
     
-    // Reset the view position when the keyboard is hidden
     @objc private func keyboardWillHide(_ notification: Notification) {
         if isKeyboardShown {
             isKeyboardShown = false
@@ -290,6 +270,4 @@ class AuthViewController: UIViewController {
             }
         }
     }
-    
 }
-
