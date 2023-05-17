@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Firebase
 
 class SignUpViewController: UIViewController {
     
@@ -32,6 +33,15 @@ class SignUpViewController: UIViewController {
         label.text = "Sign Up"
         label.font = UIFont(name: "IntegralCF-Bold", size: 60)
         label.textColor = .white
+        label.textAlignment = .left
+        return label
+    }()
+    
+    // Error label
+    let errorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .red
+        label.font = UIFont(name: "OpenSans-Regular", size: 13)
         label.textAlignment = .left
         return label
     }()
@@ -90,18 +100,28 @@ class SignUpViewController: UIViewController {
         return button
     }()
     
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+    
+    private var keyboardHeight: CGFloat = 0
+    private var isKeyboardShown = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "background")
         view.addSubview(imageView)
         view.addSubview(subtitleLabel)
         view.addSubview(titleLabel)
+        view.addSubview(errorLabel)
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
         view.addSubview(rePasswordTextField)
         view.addSubview(signUpButton)
         view.addSubview(googleSignUpButton)
-
+        
         
         imageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
@@ -123,6 +143,11 @@ class SignUpViewController: UIViewController {
             make.leading.equalToSuperview().offset(50)
             make.trailing.equalToSuperview().offset(-50)
             make.height.equalTo(50)
+        }
+        
+        errorLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(emailTextField.snp.top).offset(-5)
+            make.leading.equalTo(emailTextField)
         }
         
         passwordTextField.snp.makeConstraints { make in
@@ -149,6 +174,100 @@ class SignUpViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.leading.trailing.equalTo(signUpButton)
             make.height.equalTo(55)
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        view.addGestureRecognizer(tapGesture)
+        
+        signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func handleTap() {
+        view.endEditing(true)
+        if isKeyboardShown {
+            isKeyboardShown = false
+            UIView.animate(withDuration: 0.25) {
+                self.view.frame.origin.y += self.keyboardHeight / 2
+            }
+        }
+    }
+    
+    @objc private func signUpButtonTapped() {
+        var errorMessage: String
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text,
+              let rePassword = rePasswordTextField.text else {
+            // Handle invalid input
+            return
+        }
+        
+        // Check if the password and rePassword match
+        guard password == rePassword else {
+            // Handle password mismatch
+            errorMessage = "Password and Re-entered Password do not match."
+            self.errorLabel.text = errorMessage
+            return
+        }
+        
+        // Call the sign-up method
+        AuthManager.shared.signUp(withEmail: email, password: password) { [weak self] error in
+            if let maybeError = error {
+                let nsError = maybeError as NSError
+                if let errorCode = AuthErrorCode.Code.init(rawValue: nsError.code) {
+                    var errorMessage: String
+                    
+                    // Handle specific error cases and provide custom error messages
+                    switch errorCode {
+                    case .invalidEmail:
+                        errorMessage = "Invalid email address. Please enter a valid email."
+                    case .emailAlreadyInUse:
+                        errorMessage = "Email already in use."
+                    case .weakPassword:
+                        errorMessage = "Weak password. Please choose a stronger password."
+                        // Handle other error cases as needed
+                    default:
+                        errorMessage = "An error occurred. Please try again later."
+                    }
+                    // Display the custom error message
+                    self?.errorLabel.text = errorMessage
+                }
+                
+            } else {
+                // Reset error label if sign-up is successful
+                self?.errorLabel.text = nil
+                
+                // Sign up successful
+                let homeVC = TabBarViewController()
+                let navController = UINavigationController(rootViewController: homeVC)
+                navController.modalPresentationStyle = .fullScreen
+                self?.present(navController, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let keyboardSize = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
+        }
+        let keyboardHeight = keyboardSize.height
+        if !isKeyboardShown {
+            isKeyboardShown = true
+            self.keyboardHeight = keyboardHeight
+            UIView.animate(withDuration: 0.25) {
+                self.view.frame.origin.y -= self.keyboardHeight / 2
+            }
+        }
+    }
+    
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        if isKeyboardShown {
+            isKeyboardShown = false
+            UIView.animate(withDuration: 0.25) {
+                self.view.frame.origin.y += self.keyboardHeight / 2
+            }
         }
     }
 }

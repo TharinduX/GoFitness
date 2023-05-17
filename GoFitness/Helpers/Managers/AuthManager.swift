@@ -10,12 +10,18 @@ final class AuthManager {
         return Auth.auth().currentUser != nil
     }
     
-    private var accessToken: String? {
+    private var uid: String? {
         return Auth.auth().currentUser?.uid
     }
     
-    func authenticate(withEmail email: String, password: String, completion: @escaping (Error?) -> Void) {
+    func signIn(withEmail email: String, password: String, completion: @escaping (Error?) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { _, error in
+            completion(error)
+        }
+    }
+    
+    func signUp(withEmail email: String, password: String, completion: @escaping (Error?) -> Void) {
+        Auth.auth().createUser(withEmail: email, password: password) { _, error in
             completion(error)
         }
     }
