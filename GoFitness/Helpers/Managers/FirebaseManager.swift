@@ -18,6 +18,8 @@ class FirebaseManager {
         let userDetailsRef = db.collection("userDetails").document()
         
         let data: [String: Any] = [
+            "bmi": userDetails.bmi,
+            "bmiConsideration": userDetails.bmiConsideration,
             "userId": userDetails.userId,
             "name": userDetails.name,
             "height": userDetails.height,

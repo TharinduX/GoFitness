@@ -52,8 +52,10 @@ class SettingsViewController: UIViewController {
     }
     
     @objc private func logoutButtonTapped() {
+        ActivityIndicator.shared.show(in: view)
         do {
             try Auth.auth().signOut()
+            ActivityIndicator.shared.hide()
             navigateToLoginScreen()
         } catch let signOutError as NSError {
             print("Error signing out: \(signOutError.localizedDescription)")

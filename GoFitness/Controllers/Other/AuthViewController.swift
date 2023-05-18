@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 import Firebase
 
-
 class AuthViewController: UIViewController {
     
     // Background image view
@@ -220,12 +219,15 @@ class AuthViewController: UIViewController {
     
     // Perform login with the provided email and password
     @objc private func loginButtonTapped() {
+        ActivityIndicator.shared.show(in: view)
         guard let email = emailTextField.text, let password = passwordTextField.text else {
             // Handle invalid input
             return
         }
         
         AuthManager.shared.signIn(withEmail: email, password: password) { [weak self] error in
+        
+            ActivityIndicator.shared.hide()
             if let maybeError = error {
                 let nsError = maybeError as NSError
                 if let errorCode = AuthErrorCode.Code.init(rawValue: nsError.code) {

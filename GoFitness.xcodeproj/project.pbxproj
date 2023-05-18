@@ -15,8 +15,9 @@
 		8155615B2A1375CC00BD9C16 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 8155615A2A1375CC00BD9C16 /* FirebaseStorage */; };
 		8164B8352A15630B00E0F079 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8164B8342A15630B00E0F079 /* UserDetails.swift */; };
 		8164B8372A15665700E0F079 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8164B8362A15665700E0F079 /* FirebaseManager.swift */; };
-		8164B8392A1574BC00E0F079 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8164B8382A1574BC00E0F079 /* GoogleService-Info.plist */; };
+		8164B83B2A15770F00E0F079 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8164B83A2A15770F00E0F079 /* GoogleService-Info.plist */; };
 		81AE4C502A13F9AF005E6CAD /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AE4C4F2A13F9AF005E6CAD /* SignUpViewController.swift */; };
+		81C5332E2A1676F6001290D5 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C5332D2A1676F6001290D5 /* ActivityIndicator.swift */; };
 		81D7C2DB2A14D0C300BCAF42 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D7C2DA2A14D0C300BCAF42 /* Extentions.swift */; };
 		81D7C2DE2A1526C200BCAF42 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D7C2DD2A1526C100BCAF42 /* UserDetailsViewController.swift */; };
 		81D7D0D42A0B6706005E2937 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D7D0D32A0B6706005E2937 /* AppDelegate.swift */; };
@@ -45,8 +46,9 @@
 		813F09982A121933007CB91B /* UITextField+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Additions.swift"; sourceTree = "<group>"; };
 		8164B8342A15630B00E0F079 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		8164B8362A15665700E0F079 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
-		8164B8382A1574BC00E0F079 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8164B83A2A15770F00E0F079 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		81AE4C4F2A13F9AF005E6CAD /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		81C5332D2A1676F6001290D5 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		81D7C2DA2A14D0C300BCAF42 /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		81D7C2DD2A1526C100BCAF42 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
 		81D7D0D02A0B6706005E2937 /* GoFitness.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoFitness.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +105,7 @@
 			children = (
 				813F09982A121933007CB91B /* UITextField+Additions.swift */,
 				81D7C2DA2A14D0C300BCAF42 /* Extentions.swift */,
+				81C5332D2A1676F6001290D5 /* ActivityIndicator.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -205,7 +208,7 @@
 		81F4F6CA2A0B85C40085A0EB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				8164B8382A1574BC00E0F079 /* GoogleService-Info.plist */,
+				8164B83A2A15770F00E0F079 /* GoogleService-Info.plist */,
 				81E15CBC2A116C9A0011756B /* Fonts */,
 				81D7D0DC2A0B6708005E2937 /* Assets.xcassets */,
 				81D7D0D32A0B6706005E2937 /* AppDelegate.swift */,
@@ -307,11 +310,11 @@
 			files = (
 				81E15CCA2A116E440011756B /* OpenSans-Medium.ttf in Resources */,
 				81E15CC32A116CCE0011756B /* IntegralCF-Regular.otf in Resources */,
+				8164B83B2A15770F00E0F079 /* GoogleService-Info.plist in Resources */,
 				81E15CCC2A116E440011756B /* OpenSans-Bold.ttf in Resources */,
 				81D7D0E02A0B6708005E2937 /* LaunchScreen.storyboard in Resources */,
 				81E15CCB2A116E440011756B /* OpenSans-Regular.ttf in Resources */,
 				81E15CC92A116E440011756B /* OpenSans-SemiBold.ttf in Resources */,
-				8164B8392A1574BC00E0F079 /* GoogleService-Info.plist in Resources */,
 				81D7D0DD2A0B6708005E2937 /* Assets.xcassets in Resources */,
 				81E15CC42A116CCE0011756B /* IntegralCF-Bold.otf in Resources */,
 			);
@@ -326,6 +329,7 @@
 			files = (
 				81F4F6D92A0B8AA00085A0EB /* CustomViewController.swift in Sources */,
 				81F4F6D02A0B89B10085A0EB /* HomeViewController.swift in Sources */,
+				81C5332E2A1676F6001290D5 /* ActivityIndicator.swift in Sources */,
 				81D7D0D82A0B6706005E2937 /* AuthViewController.swift in Sources */,
 				81F4F6CD2A0B893B0085A0EB /* WelcomeViewController.swift in Sources */,
 				81D7D0D42A0B6706005E2937 /* AppDelegate.swift in Sources */,

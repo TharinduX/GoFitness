@@ -346,10 +346,10 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == heightPickerView {
             let selectedHeight = heights[row]
-            heightTextField.text = "\(selectedHeight) cm"
+            heightTextField.text = "\(selectedHeight)"
         } else if pickerView == weightPickerView {
             let selectedWeight = weights[row]
-            weightTextField.text = "\(selectedWeight) kg"
+            weightTextField.text = "\(selectedWeight)"
         } else if pickerView == fitnessGoalPickerView {
             fitnessGoalTextField.text = fitnessGoals[row]
         } else if pickerView == agePickerView {
@@ -372,47 +372,56 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     // Inside the action method for the "Complete Profile" button
     @objc func completeButtonTapped() {
+
         // Clear previous error messages
         clearErrorLabels()
-        
+
         // Validate the user details
         guard let name = nameTextField.text, !name.isEmpty else {
             showErrorMessage("Please enter your name.", for: nameErrorLabel)
             return
         }
-        
-        guard let height = heightTextField.text, !height.isEmpty else {
-            showErrorMessage("Please enter your height.", for: heightErrorLabel)
+
+        guard let heightText = heightTextField.text, !heightText.isEmpty, let height = Double(heightText) else {
+            showErrorMessage("Please select a height.", for: heightErrorLabel)
             return
         }
-        
-        guard let weight = weightTextField.text, !weight.isEmpty else {
-            showErrorMessage("Please enter your weight.", for: weightErrorLabel)
+
+        guard let weightText = weightTextField.text, !weightText.isEmpty, let weight = Double(weightText) else {
+            showErrorMessage("Please select a weight.", for: weightErrorLabel)
             return
         }
-        
-        guard let age = ageTextField.text, !age.isEmpty else {
-            showErrorMessage("Please enter your age.", for: ageErrorLabel)
+
+        guard let ageText = ageTextField.text, !ageText.isEmpty, let age = Int(ageText) else {
+            showErrorMessage("Please select a age.", for: ageErrorLabel)
             return
         }
-        
+
         guard let fitnessGoal = fitnessGoalTextField.text, !fitnessGoal.isEmpty else {
             showErrorMessage("Please select a fitness goal.", for: fitnessGoalErrorLabel)
             return
         }
+
+        let bmi = calculateBMI(height: height, weight: weight)
         
         // Create UserDetails object
         let userDetails = UserDetails(
-            userId: Auth.auth().currentUser?.uid ?? "",
+            userId: Auth.auth().currentUser?.uid ?? "",		
             name: name,
             height: height,
             weight: weight,
             age: age,
-            fitnessGoal: fitnessGoal
+            fitnessGoal: fitnessGoal,
+            bmi: bmi.bmi,
+            bmiConsideration: bmi.consideration
         )
         
+        ActivityIndicator.shared.show(in: view)
         // Save user details to Firebase
         FirebaseManager.shared.saveUserDetails(userDetails) { [weak self] error in
+            
+            ActivityIndicator.shared.hide()
+            
             if let error = error {
                 // Handle the error
                 print("Error saving user details: \(error.localizedDescription)")
@@ -454,6 +463,33 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
             print("User details saved successfully")
             
             // Perform any additional UI updates or navigate to the next screen
+        }
+    }
+    
+    private func calculateBMI(height: Double, weight: Double) -> (bmi: Double, consideration: String) {
+        let heightInMeters = height / 100 // Convert height to meters
+        let bmi = weight / (heightInMeters * heightInMeters)
+        
+        // Format the BMI value to two decimal points
+        let formattedBMI = String(format: "%.2f", bmi)
+        
+        // Determine the BMI consideration based on the BMI value
+        let consideration: String
+        if bmi < 18.5 {
+            consideration = "Underweight"
+        } else if bmi < 25.0 {
+            consideration = "Normal weight"
+        } else if bmi < 30.0 {
+            consideration = "Overweight"
+        } else {
+            consideration = "Obese"
+        }
+        
+        // Convert the formatted BMI value back to a Double
+        if let roundedBMI = Double(formattedBMI) {
+            return (roundedBMI, consideration)
+        } else {
+            return (0.0, "Unknown") // Return default values if the conversion fails
         }
     }
 
