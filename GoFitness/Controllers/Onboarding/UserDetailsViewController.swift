@@ -406,7 +406,7 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
         
         // Create UserDetails object
         let userDetails = UserDetails(
-            userId: Auth.auth().currentUser?.uid ?? "",		
+            userId: Auth.auth().currentUser?.uid ?? "",
             name: name,
             height: height,
             weight: weight,
@@ -417,6 +417,9 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
         )
         
         ActivityIndicator.shared.show(in: view)
+        
+
+
         // Save user details to Firebase
         FirebaseManager.shared.saveUserDetails(userDetails) { [weak self] error in
             
@@ -476,13 +479,13 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
         // Determine the BMI consideration based on the BMI value
         let consideration: String
         if bmi < 18.5 {
-            consideration = "Underweight"
+            consideration = "underweight"
         } else if bmi < 25.0 {
-            consideration = "Normal weight"
+            consideration = "normal weight"
         } else if bmi < 30.0 {
-            consideration = "Overweight"
+            consideration = "overweight"
         } else {
-            consideration = "Obese"
+            consideration = "obese"
         }
         
         // Convert the formatted BMI value back to a Double
