@@ -11,7 +11,8 @@ class ExerciseCollectionViewCell: UICollectionViewCell {
 
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        // Configure other properties of the image view
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -45,7 +46,7 @@ class ExerciseCollectionViewCell: UICollectionViewCell {
         
         // Set up layout constraints for the title label
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(8)
+            make.top.equalTo(imageView.snp.bottom).offset(15)
                 make.leading.trailing.equalToSuperview()
         }
         

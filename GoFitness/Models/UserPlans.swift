@@ -7,18 +7,21 @@
 
 import Foundation
 
-struct UserPlans {
-    let id: String
+struct Plans {
     let userId: String
-    let type: String
+    let type: String?
     let name: String
     let description: String
-    let planFor: String
+    let planFor: String?
     let exercises: [Exercise]
 }
 
 struct Exercise {
-    let id: Int
-    let reps: Int
+    let name: String
+    let video: String
+    let image: String
+    let description: String
+    let bodyParts: Array<String>
     let sets: Int
+    let reps: Int
 }

@@ -13,7 +13,7 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
 
         let vc1 = HomeViewController()
-        let vc2 = ExerciseViewController()
+        let vc2 = ScheduleViewController()
         let vc3 = CustomViewController()
         let vc4 = SettingsViewController()
         
@@ -28,7 +28,7 @@ class TabBarViewController: UITabBarController {
         let nav4 = UINavigationController(rootViewController: vc4)
         
         nav1.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 1)
-        nav2.tabBarItem = UITabBarItem(title: "Exercises", image: UIImage(systemName: "figure.run"), tag: 1)
+        nav2.tabBarItem = UITabBarItem(title: "Schedules", image: UIImage(systemName: "figure.run"), tag: 1)
         nav3.tabBarItem = UITabBarItem(title: "Custom", image: UIImage(systemName: "doc.badge.plus"), tag: 1)
         nav4.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 1)
         

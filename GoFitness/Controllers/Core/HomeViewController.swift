@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Firebase
 
-class HomeViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -52,7 +52,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     let exerciseLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "IntegralCF-Bold", size: 22)
-        label.text = "Suggested Exercises"
+        label.text = "Suggested Fitness Plan"
         label.textColor = .white
         return label
     }()
@@ -73,6 +73,30 @@ class HomeViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
           return collectionView
       }()
     
+    let planLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "IntegralCF-Bold", size: 22)
+        label.text = "Custom Fitness plans"
+        label.textColor = .white
+        return label
+    }()
+    
+    let planSubLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "OpenSans-SemiBold", size: 15)
+        label.text = "Check out the fitness plans you created!"
+        label.textColor = UIColor(named: "primary")
+        return label
+    }()
+    
+    private let planCollectionView: UICollectionView = {
+          let layout = UICollectionViewFlowLayout()
+          layout.scrollDirection = .horizontal
+          let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+          // Configure other properties of the collection view
+          return collectionView
+      }()
+    
     private var exercises: [[String: Any]] = []
     
     override func viewDidLoad() {
@@ -84,6 +108,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         view.addSubview(imageView)
         view.addSubview(exerciseLabel)
         view.addSubview(exerciseSubLabel)
+        view.addSubview(planLabel)
+        view.addSubview(planSubLabel)
         
         view.bringSubviewToFront(goalLabel)
         collectionView.register(ExerciseCollectionViewCell.self, forCellWithReuseIdentifier: "ExerciseCell")
@@ -91,6 +117,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         collectionView.delegate = self
         view.addSubview(collectionView)
         
+        
+        planCollectionView.register(PlanCollectionViewCell.self, forCellWithReuseIdentifier: "ExerciseCell")
+        planCollectionView.dataSource = self
+        planCollectionView.delegate = self
+        view.addSubview(planCollectionView)
         
         
         titleLabel.snp.makeConstraints { make in
@@ -126,34 +157,49 @@ class HomeViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(exerciseSubLabel.snp.bottom).offset(15)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(250)
+            make.height.equalTo(200)
         }
         
+        planLabel.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom).offset(10)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+        }
+        planSubLabel.snp.makeConstraints { make in
+            make.top.equalTo(planLabel.snp.bottom).offset(8)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+        }
         
-        // Fetch user's exercise plan from Firebase
-        FirebaseManager.shared.getUserPlan { [weak self] planDetails, error in
-            if let error = error {
-                // Handle the error
-                print("Error retrieving user details: \(error.localizedDescription)")
-            } else if let planDetails = planDetails,
-                      let planName = planDetails["name"] as? String,
-                      let exercises = planDetails["exercises"] as? [[String: Any]] {
-                // Store the exercises in the view controller
-                self?.exercises = exercises
-                
-                // Update UI or perform further processing
-                print("Plan Name: \(planName)")
-                print("Exercises: \(exercises)")
-                
-                // Reload the collection view to display the exercises
-                DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
+        // Set up constraints for the collection view
+        planCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(planSubLabel.snp.bottom).offset(15)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(200)
+        }
+        
+            // Fetch user's exercise plan from Firebase
+            FirebaseManager.shared.getUserPlan { [weak self] planDetails, error in
+                if let error = error {
+                    // Handle the error
+                    print("Error retrieving user details: \(error.localizedDescription)")
+                } else if let planDetails = planDetails,
+                          let planName = planDetails["name"] as? String,
+                          let exercises = planDetails["exercises"] as? [[String: Any]] {
+                    // Store the exercises in the view controller
+                    self?.exercises = exercises
+                    
+                    // Update UI or perform further processing
+                    print("Plan Name: \(planName)")
+                    print("Exercises: \(exercises)")
+                    
+                    // Reload the collection view to display the exercises
+                    DispatchQueue.main.async {
+                        self?.collectionView.reloadData()
+                    }
+                } else {
+                    // Handle the case where no matching plan is found
+                    print("No matching plan found.")
                 }
-            } else {
-                // Handle the case where no matching plan is found
-                print("No matching plan found.")
             }
-        }
         
         
         // Fetch user details from Firebase
@@ -193,6 +239,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         greetingLabel.text = greeting
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailViewController = ExerciseDetailViewController()
+        
+        // Pass the relevant exercise data to the detail view controller
+        let selectedExercise = exercises[indexPath.item]
+        detailViewController.exercise = selectedExercise
+        
+        navigationController?.pushViewController(detailViewController, animated: true)
+    }
+    
     // Collection view data source methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -220,23 +277,22 @@ class HomeViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
             }
         }
         
+        
         return cell
     }
+    
     
     // Collection view delegate flow layout methods
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // Return the desired size for each exercise card
         return CGSize(width: 200, height: 200)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        // Return the desired inset for the section
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        // Return the desired minimum line spacing for the section
         return 10
     }
 
