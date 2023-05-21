@@ -10,8 +10,10 @@ import Foundation
 struct UserDetails {
     let userId: String
     let name: String
-    let height: String
-    let weight: String
-    let age: String
+    let height: Double
+    let weight: Double
+    let age: Int
     let fitnessGoal: String
+    let bmi: Double
+    let bmiConsideration: String
 }

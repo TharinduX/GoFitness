@@ -29,3 +29,22 @@ extension UITextField {
     
     
 }
+
+extension UITextView {
+    func addBottomBorder(color: UIColor, height: CGFloat) {
+        let borderView = UIView()
+        borderView.backgroundColor = color
+        addSubview(borderView)
+        
+        borderView.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.height.equalTo(height)
+        }
+        
+    }
+    
+    
+}
+    
