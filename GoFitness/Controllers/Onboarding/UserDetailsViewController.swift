@@ -413,13 +413,11 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
             age: age,
             fitnessGoal: fitnessGoal,
             bmi: bmi.bmi,
-            bmiConsideration: bmi.consideration
+            bmiConsideration: bmi.consideration,
+            steps: 0
         )
         
         ActivityIndicator.shared.show(in: view)
-        
-
-
         // Save user details to Firebase
         FirebaseManager.shared.saveUserDetails(userDetails) { [weak self] error in
             
@@ -436,7 +434,7 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
                 let navController = UINavigationController(rootViewController: homeVC)
                 navController.modalPresentationStyle = .fullScreen
                 self?.present(navController, animated: true, completion: nil)
-            }
+            }   
             
             // Update UI on the main queue
             DispatchQueue.main.async {

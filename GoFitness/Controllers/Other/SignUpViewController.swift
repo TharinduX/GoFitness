@@ -196,6 +196,7 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func signUpButtonTapped() {
+     
         var errorMessage: String
         guard let email = emailTextField.text,
               let password = passwordTextField.text,
@@ -206,7 +207,7 @@ class SignUpViewController: UIViewController {
         
         // Check if the password and rePassword match
         guard password == rePassword else {
-            ActivityIndicator.shared.show(in: view)
+  
             // Handle password mismatch
             errorMessage = "Password and Re-entered Password do not match."
             self.errorLabel.text = errorMessage
@@ -215,7 +216,6 @@ class SignUpViewController: UIViewController {
 
         // Call the sign-up method
         AuthManager.shared.signUp(withEmail: email, password: password) { [weak self] error in
-            ActivityIndicator.shared.hide()
             if let maybeError = error {
                 let nsError = maybeError as NSError
                 if let errorCode = AuthErrorCode.Code.init(rawValue: nsError.code) {
@@ -242,7 +242,7 @@ class SignUpViewController: UIViewController {
                 self?.errorLabel.text = nil
                 
                 // Sign up successful
-                let homeVC = TabBarViewController()
+                let homeVC = UserDetailsViewController()
                 let navController = UINavigationController(rootViewController: homeVC)
                 navController.modalPresentationStyle = .fullScreen
                 self?.present(navController, animated: true, completion: nil)

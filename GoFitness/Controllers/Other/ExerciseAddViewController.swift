@@ -9,11 +9,14 @@ import UIKit
 import SnapKit
 import Firebase
 
-class ExerciseAddViewController: UIViewController {
+class ExerciseAddViewController: UIViewController,  UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
 
+    var plan: [String: Any]?
+
+    
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Custom Schedule"
+        label.text = "Add Exercises"
         label.font = UIFont(name: "IntegralCF-Bold", size: 30)
         label.textColor = .white
         return label
@@ -21,7 +24,7 @@ class ExerciseAddViewController: UIViewController {
     
     let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Add custom schedule"
+        label.text = "Add exercises to plan"
         label.font = UIFont(name: "IntegralCF-Regular", size: 20)
         label.textColor = UIColor(named: "primary")
         return label
@@ -84,8 +87,11 @@ class ExerciseAddViewController: UIViewController {
         return button
     }()
     
+    var exercisePickerData: [Exercise] = [] 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchExercises()
         view.backgroundColor = UIColor(named: "background")
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
@@ -93,6 +99,21 @@ class ExerciseAddViewController: UIViewController {
         view.addSubview(repsTextField)
         view.addSubview(setsTextField)
         view.addSubview(saveButton)
+        
+        exerciseTextField.inputAccessoryView = createToolbar(for: exerciseTextField)
+        exerciseTextField.inputView = exercisePickerView
+        exercisePickerView.delegate = self
+        exercisePickerView.dataSource = self
+        
+        repsTextField.inputAccessoryView = createToolbar(for: repsTextField)
+        repsTextField.inputView = repsPickerView
+        repsPickerView.delegate = self
+        repsPickerView.dataSource = self
+        
+        setsTextField.inputAccessoryView = createToolbar(for: setsTextField)
+        setsTextField.inputView = setsPickerView
+        setsPickerView.delegate = self
+        setsPickerView.dataSource = self
         
         
         titleLabel.snp.makeConstraints { make in
@@ -132,10 +153,53 @@ class ExerciseAddViewController: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tapGesture)
+        
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
     }
     
     @objc private func handleTap() {
         view.endEditing(true)
+    }
+    
+    func createToolbar(for textField: UITextField) -> UIToolbar {
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.isTranslucent = true
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        
+        textField.inputAccessoryView = toolbar
+        
+        return toolbar
+    }
+    
+    @objc func doneButtonTapped() {
+        view.endEditing(true)
+    }
+    
+    func fetchExercises() {
+        FirebaseManager.shared.fetchExercisesFromFirestore { [weak self] (exercises, error) in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print("Error fetching exercises: \(error.localizedDescription)")
+                return
+            }
+            
+            if let exercises = exercises {
+                self.exercisePickerData = exercises
+                self.exercisePickerView.reloadAllComponents()
+            }
+        }
+    }
+    
+    @objc func saveButtonTapped() {
+        
+        
     }
     
     class NonEditableTextField: UITextField {
@@ -147,6 +211,51 @@ class ExerciseAddViewController: UIViewController {
         override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
             // Disable all text interaction actions (e.g., copy, paste, select, etc.)
             return false
+        }
+    }
+    
+    // MARK: - UIPickerViewDataSource
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView == exercisePickerView {
+            return exercisePickerData.count
+        } else if pickerView == repsPickerView {
+            return reps.count
+        }else if pickerView == setsPickerView {
+            return sets.count
+        } else {
+            return 0
+        }
+    }
+    
+    // MARK: - UIPickerViewDelegate
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerView == exercisePickerView {
+            return exercisePickerData[row].name
+        } else if pickerView == repsPickerView {
+            return "\(reps[row])"
+        } else if pickerView == setsPickerView {
+            return "\(sets[row])"
+        }else {
+            return nil
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == exercisePickerView {
+            let selectedExercise = exercisePickerData[row]
+            exerciseTextField.text = selectedExercise.name
+        } else if pickerView == repsPickerView {
+            let selectedRep = reps[row]
+            repsTextField.text = "\(selectedRep)"
+        }else if pickerView == setsPickerView {
+            let selectedSet = sets[row]
+            setsTextField.text = "\(selectedSet)"
         }
     }
     

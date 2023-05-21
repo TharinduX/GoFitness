@@ -37,7 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             } else {
                 // User ID is not available, show the UserDetailsViewController
-                window.rootViewController = UserDetailsViewController()
+                window.rootViewController = AuthViewController()
             }
         }
  else {

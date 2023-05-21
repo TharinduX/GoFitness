@@ -37,12 +37,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             } else {
                 // User ID is not available, show the UserDetailsViewController
-                window.rootViewController = UserDetailsViewController()
+                window.rootViewController = AuthViewController()
             }
         }
         
         else {
-            let navVC = UINavigationController(rootViewController: WelcomeViewController())
+            let navVC = UINavigationController(rootViewController: AuthViewController())
             navVC.navigationBar.prefersLargeTitles = true
             navVC.viewControllers.first?.navigationItem.largeTitleDisplayMode = .always
             window.rootViewController = navVC

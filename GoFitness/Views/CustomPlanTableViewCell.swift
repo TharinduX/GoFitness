@@ -78,7 +78,12 @@ class CustomPlanTableViewCell: UITableViewCell {
     }
     
     @objc private func cellTapped() {
-        
+        if let plan = plan,
+           let navigationController = navigationController {
+            let detailViewController = SingleScheduleViewController()
+            detailViewController.plan = plan
+            navigationController.pushViewController(detailViewController, animated: true)
+        }
     }
     
     func configure(with plan: [String: Any], navigationController: UINavigationController?) {

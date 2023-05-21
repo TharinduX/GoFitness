@@ -16,4 +16,5 @@ struct UserDetails {
     let fitnessGoal: String
     let bmi: Double
     let bmiConsideration: String
+    let steps: Int?
 }

@@ -119,7 +119,7 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchExercisesFromFirestore()
+        fetchExercises()
         view.backgroundColor = UIColor(named: "background")
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
@@ -240,9 +240,8 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         view.endEditing(true)
     }
     
-    func fetchExercisesFromFirestore() {
-        let db = Firestore.firestore()
-        db.collection("exercises").getDocuments { [weak self] (snapshot, error) in
+    func fetchExercises() {
+        FirebaseManager.shared.fetchExercisesFromFirestore { [weak self] (exercises, error) in
             guard let self = self else { return }
             
             if let error = error {
@@ -250,16 +249,7 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 return
             }
             
-            if let snapshot = snapshot {
-                var exercises = [Exercise]()
-                for document in snapshot.documents {
-                    if let exerciseData = document.data() as? [String: Any],
-                       let name = exerciseData["name"] as? String {
-                        let exercise = Exercise(name: name, video: "", image: "", description: "", bodyParts: [], sets: 0, reps: 0)
-                        exercises.append(exercise)
-                    }
-                }
-                
+            if let exercises = exercises {
                 self.exercisePickerData = exercises
                 self.exercisePickerView.reloadAllComponents()
             }

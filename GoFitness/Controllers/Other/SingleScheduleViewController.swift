@@ -83,6 +83,7 @@ class SingleScheduleViewController: UIViewController, UITableViewDataSource, UIT
     
     @objc private func newButtonTapped() {
         let exerciseAddViewController = ExerciseAddViewController()
+        exerciseAddViewController.plan = self.plan
         navigationController?.pushViewController(exerciseAddViewController, animated: true)
     }
     
