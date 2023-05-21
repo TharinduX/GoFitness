@@ -49,6 +49,7 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let textView = UITextView()
         textView.font = UIFont(name: "OpenSans-Regular", size: 17)
         textView.textColor = .white
+        textView.backgroundColor = UIColor(named: "background")
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor(named: "bg-secondary")?.cgColor ?? UIColor.darkGray.cgColor
         textView.layer.cornerRadius = 8

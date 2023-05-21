@@ -35,6 +35,7 @@ class CustomPlanTableViewCell: UITableViewCell {
     let planDescriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "OpenSans-Regular", size: 12)
+        label.textColor = .white
         label.textAlignment = .left
         label.numberOfLines = 0
         return label

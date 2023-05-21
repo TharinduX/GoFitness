@@ -27,6 +27,7 @@ class PlanCollectionViewCell: UICollectionViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "OpenSans-SemiBold", size: 20)
+        label.textColor = UIColor(named: "primary")
         label.textAlignment = .center
         label.numberOfLines = 2
         return label

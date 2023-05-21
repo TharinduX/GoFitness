@@ -39,6 +39,7 @@ class SingleScheduleViewController: UIViewController, UITableViewDataSource, UIT
     let exercisesTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor(named: "background")
         tableView.register(ExerciseTableViewCell.self, forCellReuseIdentifier: "ExerciseCell")
         return tableView
     }()
@@ -113,6 +114,7 @@ class SingleScheduleViewController: UIViewController, UITableViewDataSource, UIT
             cell.configure(with: exercise, navigationController: navigationController)
         }
         
+        cell.backgroundColor = UIColor(named: "background")
         return cell
     }
 

@@ -101,6 +101,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
         // Configure other properties of the collection view
         return collectionView
     }()
@@ -256,7 +257,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.view.layoutIfNeeded()
         let contentHeight = planCollectionView.frame.origin.y + planCollectionView.frame.height + 20
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: contentHeight)
-        
+        collectionView.backgroundColor = UIColor(named: "background")
+        planCollectionView.backgroundColor = UIColor(named: "background")
         
     }
     

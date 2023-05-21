@@ -41,6 +41,8 @@ class TabBarViewController: UITabBarController {
         
         let tabColor = UIColor(named: "nav")
         tabBar.layer.backgroundColor = tabColor?.cgColor
+        tabBar.overrideUserInterfaceStyle = .dark
+        
         
         let tabBarAppearance = UITabBarAppearance()
                 tabBarAppearance.stackedLayoutAppearance.normal.iconColor = .gray

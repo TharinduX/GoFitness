@@ -31,6 +31,7 @@ class ScheduleViewController: UIViewController, UITableViewDataSource, UITableVi
     
     let planTableView: UITableView = {
         let tableView = UITableView()
+        tableView.backgroundColor = UIColor(named: "background")
         tableView.separatorStyle = .none
         tableView.register(CustomPlanTableViewCell.self, forCellReuseIdentifier: "CustomPlansCell")
         return tableView
@@ -93,7 +94,8 @@ class ScheduleViewController: UIViewController, UITableViewDataSource, UITableVi
 
         let plan = plans[indexPath.row]
         cell.configure(with: plan, navigationController: navigationController)
-
+        
+        cell.backgroundColor = UIColor(named: "background")
         return cell
     }
 

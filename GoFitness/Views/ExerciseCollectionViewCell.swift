@@ -19,7 +19,7 @@ class ExerciseCollectionViewCell: UICollectionViewCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        // Configure other properties of the label
+        label.textColor = .white
         return label
     }()
     
