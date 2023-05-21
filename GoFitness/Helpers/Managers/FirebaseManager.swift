@@ -35,8 +35,8 @@ class FirebaseManager {
     
     func getUserDetails(completion: @escaping ([String: Any]?, Error?) -> Void) {
         if let uid = Auth.auth().currentUser?.uid {
+
             let userDetailsRef = db.collection("userDetails").whereField("userId", isEqualTo: uid)
-            
             userDetailsRef.getDocuments { (querySnapshot, error) in
                 if let error = error {
                     completion(nil, error)
@@ -178,6 +178,38 @@ class FirebaseManager {
             }
         }
     }
+    
+    func getCustomPlans(completion: @escaping ([[String: Any]]?, Error?) -> Void) {
+        guard let currentUser = Auth.auth().currentUser else {
+            // Handle the case where the current user is not available
+            let error = NSError(domain: "CustomPlansErrorDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: "Current user not available"])
+            completion(nil, error)
+            return
+        }
+        
+        let userUID = currentUser.uid
+        let plansRef = Firestore.firestore().collection("plans")
+        
+        plansRef.whereField("userId", isEqualTo: userUID).whereField("type", isEqualTo: "").getDocuments { (snapshot, error) in
+            if let error = error {
+                // Handle the error
+                completion(nil, error)
+                return
+            }
+            
+            var plans: [[String: Any]] = []
+            
+            if let snapshot = snapshot {
+                for document in snapshot.documents {
+                    let planData = document.data()
+                    plans.append(planData)
+                }
+            }
+            
+            completion(plans, nil)
+        }
+    }
+    
 }
 
 

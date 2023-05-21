@@ -15,9 +15,13 @@
 		8155615B2A1375CC00BD9C16 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 8155615A2A1375CC00BD9C16 /* FirebaseStorage */; };
 		815C29942A17D196002EB9CD /* UserPlans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815C29932A17D196002EB9CD /* UserPlans.swift */; };
 		815C29962A18248C002EB9CD /* ExerciseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815C29952A18248C002EB9CD /* ExerciseCollectionViewCell.swift */; };
+		816299472A1A3B8B00796424 /* ExerciseAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816299462A1A3B8B00796424 /* ExerciseAddViewController.swift */; };
+		8162994B2A1A413700796424 /* CustomPlanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8162994A2A1A413700796424 /* CustomPlanTableViewCell.swift */; };
 		8164B8352A15630B00E0F079 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8164B8342A15630B00E0F079 /* UserDetails.swift */; };
 		8164B8372A15665700E0F079 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8164B8362A15665700E0F079 /* FirebaseManager.swift */; };
 		8164B83B2A15770F00E0F079 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8164B83A2A15770F00E0F079 /* GoogleService-Info.plist */; };
+		817539BD2A194E6E009651EC /* SingleScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817539BC2A194E6E009651EC /* SingleScheduleViewController.swift */; };
+		817539BF2A195116009651EC /* ExerciseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817539BE2A195116009651EC /* ExerciseTableViewCell.swift */; };
 		8187804A2A18B7BB00FB2415 /* PlanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818780492A18B7BB00FB2415 /* PlanCollectionViewCell.swift */; };
 		8187804C2A18BDB800FB2415 /* ExerciseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8187804B2A18BDB800FB2415 /* ExerciseDetailViewController.swift */; };
 		8187804E2A191AC500FB2415 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8187804D2A191AC500FB2415 /* ScheduleViewController.swift */; };
@@ -49,9 +53,13 @@
 		813F09982A121933007CB91B /* UITextField+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Additions.swift"; sourceTree = "<group>"; };
 		815C29932A17D196002EB9CD /* UserPlans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlans.swift; sourceTree = "<group>"; };
 		815C29952A18248C002EB9CD /* ExerciseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCollectionViewCell.swift; sourceTree = "<group>"; };
+		816299462A1A3B8B00796424 /* ExerciseAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseAddViewController.swift; sourceTree = "<group>"; };
+		8162994A2A1A413700796424 /* CustomPlanTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPlanTableViewCell.swift; sourceTree = "<group>"; };
 		8164B8342A15630B00E0F079 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		8164B8362A15665700E0F079 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		8164B83A2A15770F00E0F079 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		817539BC2A194E6E009651EC /* SingleScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleScheduleViewController.swift; sourceTree = "<group>"; };
+		817539BE2A195116009651EC /* ExerciseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTableViewCell.swift; sourceTree = "<group>"; };
 		818780492A18B7BB00FB2415 /* PlanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCollectionViewCell.swift; sourceTree = "<group>"; };
 		8187804B2A18BDB800FB2415 /* ExerciseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDetailViewController.swift; sourceTree = "<group>"; };
 		8187804D2A191AC500FB2415 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +191,8 @@
 				81D7D0DE2A0B6708005E2937 /* LaunchScreen.storyboard */,
 				815C29952A18248C002EB9CD /* ExerciseCollectionViewCell.swift */,
 				818780492A18B7BB00FB2415 /* PlanCollectionViewCell.swift */,
+				817539BE2A195116009651EC /* ExerciseTableViewCell.swift */,
+				8162994A2A1A413700796424 /* CustomPlanTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -232,6 +242,8 @@
 				81F4F6CC2A0B893B0085A0EB /* WelcomeViewController.swift */,
 				81AE4C4F2A13F9AF005E6CAD /* SignUpViewController.swift */,
 				8187804B2A18BDB800FB2415 /* ExerciseDetailViewController.swift */,
+				817539BC2A194E6E009651EC /* SingleScheduleViewController.swift */,
+				816299462A1A3B8B00796424 /* ExerciseAddViewController.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -339,14 +351,17 @@
 				81F4F6D92A0B8AA00085A0EB /* CustomViewController.swift in Sources */,
 				81F4F6D02A0B89B10085A0EB /* HomeViewController.swift in Sources */,
 				815C29962A18248C002EB9CD /* ExerciseCollectionViewCell.swift in Sources */,
+				817539BD2A194E6E009651EC /* SingleScheduleViewController.swift in Sources */,
 				8187804C2A18BDB800FB2415 /* ExerciseDetailViewController.swift in Sources */,
 				81C5332E2A1676F6001290D5 /* ActivityIndicator.swift in Sources */,
 				81D7D0D82A0B6706005E2937 /* AuthViewController.swift in Sources */,
 				81F4F6CD2A0B893B0085A0EB /* WelcomeViewController.swift in Sources */,
 				81D7D0D42A0B6706005E2937 /* AppDelegate.swift in Sources */,
+				817539BF2A195116009651EC /* ExerciseTableViewCell.swift in Sources */,
 				813F09992A121933007CB91B /* UITextField+Additions.swift in Sources */,
 				8187804E2A191AC500FB2415 /* ScheduleViewController.swift in Sources */,
 				81F4F6D22A0B8A250085A0EB /* TabBarViewController.swift in Sources */,
+				8162994B2A1A413700796424 /* CustomPlanTableViewCell.swift in Sources */,
 				81AE4C502A13F9AF005E6CAD /* SignUpViewController.swift in Sources */,
 				8164B8352A15630B00E0F079 /* UserDetails.swift in Sources */,
 				81D7C2DE2A1526C200BCAF42 /* UserDetailsViewController.swift in Sources */,
@@ -356,6 +371,7 @@
 				8187804A2A18B7BB00FB2415 /* PlanCollectionViewCell.swift in Sources */,
 				81D7C2DB2A14D0C300BCAF42 /* Extentions.swift in Sources */,
 				81F4F6DB2A0B8AE00085A0EB /* SettingsViewController.swift in Sources */,
+				816299472A1A3B8B00796424 /* ExerciseAddViewController.swift in Sources */,
 				81F4F6DD2A0B8B4B0085A0EB /* AuthManager.swift in Sources */,
 				815C29942A17D196002EB9CD /* UserPlans.swift in Sources */,
 			);
@@ -501,6 +517,7 @@
 				INFOPLIST_FILE = GoFitness/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GoFitness;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSMotionUsageDescription = "This app uses motion data to count the number of steps for fitness tracking";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -533,6 +550,7 @@
 				INFOPLIST_FILE = GoFitness/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GoFitness;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSMotionUsageDescription = "This app uses motion data to count the number of steps for fitness tracking";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

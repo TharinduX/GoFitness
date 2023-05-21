@@ -8,8 +8,25 @@
 import UIKit
 import SnapKit
 import Firebase
+import CoreMotion
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+private let stepCountKey = "StepCount"
+
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIScrollViewDelegate  {
+    
+    private let pedometer = CMPedometer()
+    private var lastStepCount: Int?
+    private var stepCount: Int = 0 {
+        didSet {
+            stepCountLabel.text = "Steps: \(stepCount) steps"
+            UserDefaults.standard.set(stepCount, forKey: stepCountKey)
+        }
+    }
+    
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        return scrollView
+    }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -49,6 +66,21 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return imageView
     }()
     
+    let stepCountContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: "primary")
+        return view
+    }()
+    
+    let stepCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "IntegralCF-Bold", size: 15)
+        label.text = "Steps:()"
+        label.textColor = UIColor(named: "background")
+        label.textAlignment = .center
+        return label
+    }()
+    
     let exerciseLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "IntegralCF-Bold", size: 22)
@@ -66,12 +98,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }()
     
     private let collectionView: UICollectionView = {
-          let layout = UICollectionViewFlowLayout()
-          layout.scrollDirection = .horizontal
-          let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-          // Configure other properties of the collection view
-          return collectionView
-      }()
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        // Configure other properties of the collection view
+        return collectionView
+    }()
     
     let planLabel: UILabel = {
         let label = UILabel()
@@ -90,122 +122,165 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }()
     
     private let planCollectionView: UICollectionView = {
-          let layout = UICollectionViewFlowLayout()
-          layout.scrollDirection = .horizontal
-          let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-          // Configure other properties of the collection view
-          return collectionView
-      }()
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        return collectionView
+    }()
+    
     
     private var exercises: [[String: Any]] = []
+    private var plans: [[String: Any]] = []
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = UIColor(named: "background")
-        view.addSubview(titleLabel)
-        view.addSubview(greetingLabel)
-        view.addSubview(goalLabel)
-        view.addSubview(imageView)
-        view.addSubview(exerciseLabel)
-        view.addSubview(exerciseSubLabel)
-        view.addSubview(planLabel)
-        view.addSubview(planSubLabel)
+        navigationController?.navigationBar.isHidden = true
+        
+        
+        let savedStepCount = UserDefaults.standard.integer(forKey: stepCountKey)
+        stepCount = savedStepCount
+        
+        if CMPedometer.isStepCountingAvailable() {
+            startStepCounting()
+        } else {
+            print("Step counting is not available.")
+        }
+        
+        
+        setupViews()
+        fetchUserDetails()
+        updateGreeting()
+        fetchSuggestedPlan()
+        fetchCustomPlans()
+        
+    }
+    
+    //setup views
+    private func setupViews(){
+        
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        scrollView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(30)
+            make.leading.equalTo(scrollView.safeAreaLayoutGuide).offset(20)
+        }
+        
+        scrollView.addSubview(greetingLabel)
+        greetingLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.leading.equalTo(scrollView.safeAreaLayoutGuide).offset(20)
+        }
+        
+        scrollView.addSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.top.equalTo(greetingLabel.snp.bottom).offset(15)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(20)
+        }
+        
+        imageView.addSubview(stepCountContainerView)
+        stepCountContainerView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(15)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(40)
+        }
+        
+        stepCountContainerView.addSubview(stepCountLabel)
+        stepCountLabel.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(8).priority(.low)
+            make.trailing.equalToSuperview().offset(-8).priority(.low)
+        }
         
         view.bringSubviewToFront(goalLabel)
+        imageView.addSubview(goalLabel)
+        goalLabel.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).inset(48)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(30)
+        }
+        
+        scrollView.addSubview(exerciseLabel)
+        exerciseLabel.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(15)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(20)
+        }
+        
+        scrollView.addSubview(exerciseSubLabel)
+        exerciseSubLabel.snp.makeConstraints { make in
+            make.top.equalTo(exerciseLabel.snp.bottom).offset(8)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(20)
+        }
+        
+        scrollView.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(exerciseSubLabel.snp.bottom).offset(15)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide)
+            make.width.equalTo(scrollView)
+            make.height.equalTo(200)
+        }
         collectionView.register(ExerciseCollectionViewCell.self, forCellWithReuseIdentifier: "ExerciseCell")
         collectionView.dataSource = self
         collectionView.delegate = self
-        view.addSubview(collectionView)
         
-        
-        planCollectionView.register(PlanCollectionViewCell.self, forCellWithReuseIdentifier: "ExerciseCell")
-        planCollectionView.dataSource = self
-        planCollectionView.delegate = self
-        view.addSubview(planCollectionView)
-        
-        
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(100)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-        }
-        
-        greetingLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-        }
-        
-        imageView.snp.makeConstraints { make in
-            make.top.equalTo(greetingLabel.snp.bottom).offset(15)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
-        }
-        
-        goalLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).inset(48)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(30)
-        }
-        
-        exerciseLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(15)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
-        }
-        exerciseSubLabel.snp.makeConstraints { make in
-            make.top.equalTo(exerciseLabel.snp.bottom).offset(8)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
-        }
-        
-        // Set up constraints for the collection view
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(exerciseSubLabel.snp.bottom).offset(15)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(200)
-        }
-        
+        scrollView.addSubview(planLabel)
         planLabel.snp.makeConstraints { make in
             make.top.equalTo(collectionView.snp.bottom).offset(10)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
-        }
-        planSubLabel.snp.makeConstraints { make in
-            make.top.equalTo(planLabel.snp.bottom).offset(8)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(20)
         }
         
-        // Set up constraints for the collection view
+        scrollView.addSubview(planSubLabel)
+        planSubLabel.snp.makeConstraints { make in
+            make.top.equalTo(planLabel.snp.bottom).offset(8)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(20)
+        }
+        
+        scrollView.addSubview(planCollectionView)
         planCollectionView.snp.makeConstraints { make in
             make.top.equalTo(planSubLabel.snp.bottom).offset(15)
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide)
+            make.width.equalTo(scrollView)
             make.height.equalTo(200)
         }
         
-            // Fetch user's exercise plan from Firebase
-            FirebaseManager.shared.getUserPlan { [weak self] planDetails, error in
-                if let error = error {
-                    // Handle the error
-                    print("Error retrieving user details: \(error.localizedDescription)")
-                } else if let planDetails = planDetails,
-                          let planName = planDetails["name"] as? String,
-                          let exercises = planDetails["exercises"] as? [[String: Any]] {
-                    // Store the exercises in the view controller
-                    self?.exercises = exercises
-                    
-                    // Update UI or perform further processing
-                    print("Plan Name: \(planName)")
-                    print("Exercises: \(exercises)")
-                    
-                    // Reload the collection view to display the exercises
-                    DispatchQueue.main.async {
-                        self?.collectionView.reloadData()
-                    }
-                } else {
-                    // Handle the case where no matching plan is found
-                    print("No matching plan found.")
+        planCollectionView.register(PlanCollectionViewCell.self, forCellWithReuseIdentifier: "PlanCell")
+        planCollectionView.dataSource = self
+        planCollectionView.delegate = self
+        
+        self.view.layoutIfNeeded()
+        let contentHeight = planCollectionView.frame.origin.y + planCollectionView.frame.height + 20
+        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: contentHeight)
+        
+        
+    }
+    
+    // Fetch suggested plan from Firebase
+    private func fetchSuggestedPlan() {
+        FirebaseManager.shared.getUserPlan { [weak self] planDetails, error in
+            if let error = error {
+                print("Error retrieving user details: \(error.localizedDescription)")
+            } else if let planDetails = planDetails,
+                      let exercises = planDetails["exercises"] as? [[String: Any]] {
+                self?.exercises = exercises
+                
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
                 }
+            } else {
+                print("No matching plan found.")
             }
-        
-        
-        // Fetch user details from Firebase
+        }
+    }
+    // Fetch user details from Firebase
+    private func fetchUserDetails() {
         FirebaseManager.shared.getUserDetails { [weak self] userDetails, error in
             if let error = error {
-                // Handle the error
                 print("Error retrieving user details: \(error.localizedDescription)")
             } else if let userDetails = userDetails,
                       let name = userDetails["name"] as? String,
@@ -214,13 +289,53 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 self?.titleLabel.text = "Hello, \(name)"
                 self?.goalLabel.text = "Goal: \(goal)"
             } else {
-                // User details not found or user not logged in
                 print("User details not found or user not logged in")
             }
         }
-        
-        updateGreeting()
     }
+    
+    // Fetch custom plans from Firebase
+    private func fetchCustomPlans() {
+        FirebaseManager.shared.getCustomPlans { [weak self] plans, error in
+            if let error = error {
+                print("Error retrieving plans: \(error.localizedDescription)")
+            } else if let plans = plans, !plans.isEmpty {
+                self?.plans = plans
+                DispatchQueue.main.async {
+                    self?.planCollectionView.reloadData()
+                }
+            } else {
+                print("No plans found for the user.")
+            }
+        }
+    }
+    
+    private func startStepCounting() {
+        pedometer.startUpdates(from: Date()) { [weak self] (data, error) in
+            guard let data = data, error == nil else {
+                print("Error starting step counting: \(error?.localizedDescription ?? "")")
+                return
+            }
+
+            DispatchQueue.main.async {
+                let steps = data.numberOfSteps.intValue
+                let stepsSinceLastUpdate = steps - (self?.lastStepCount ?? steps)
+                self?.lastStepCount = steps
+                self?.stepCount += stepsSinceLastUpdate
+            }
+        }
+    }
+    
+    
+    private func saveStepCount(_ count: Int) {
+        UserDefaults.standard.set(count, forKey: "StepCount")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        pedometer.stopUpdates()
+    }
+    
     
     private func updateGreeting() {
         let dateFormatter = DateFormatter()
@@ -241,48 +356,62 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailViewController = ExerciseDetailViewController()
-        
-        // Pass the relevant exercise data to the detail view controller
-        let selectedExercise = exercises[indexPath.item]
-        detailViewController.exercise = selectedExercise
-        
-        navigationController?.pushViewController(detailViewController, animated: true)
+        if collectionView == self.collectionView {
+            let detailViewController = ExerciseDetailViewController()
+            let selectedExercise = exercises[indexPath.item]
+            detailViewController.exercise = selectedExercise
+            navigationController?.pushViewController(detailViewController, animated: true)
+        } else if collectionView == self.planCollectionView {
+            let scheduleController = SingleScheduleViewController()
+            let selectedSchedule = plans[indexPath.item]
+            scheduleController.plan = selectedSchedule
+            navigationController?.pushViewController(scheduleController, animated: true)
+        }
     }
     
     // Collection view data source methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // Return the number of exercise cards you want to display
-        return exercises.count
+        if collectionView == self.collectionView {
+            return exercises.count
+        } else if collectionView == self.planCollectionView {
+            return plans.count
+        }
+        return 0
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExerciseCell", for: indexPath) as! ExerciseCollectionViewCell
-        
-        // Configure the exercise card cell
-        let exercise = exercises[indexPath.item]
-        if let exerciseTitle = exercise["name"] as? String,
-           let exerciseImageURL = exercise["image"] as? String {
-            cell.titleLabel.text = exerciseTitle
-            // Load exercise image asynchronously from the imageURL and set it in the cell's image view
-            // Example code:
-            DispatchQueue.global().async {
-                if let imageData = try? Data(contentsOf: URL(string: exerciseImageURL)!) {
-                    let image = UIImage(data: imageData)
-                    DispatchQueue.main.async {
-                        cell.imageView.image = image
+        if collectionView == self.collectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExerciseCell", for: indexPath) as! ExerciseCollectionViewCell
+            
+            let exercise = exercises[indexPath.item]
+            if let exerciseTitle = exercise["name"] as? String,
+               let exerciseImageURL = exercise["image"] as? String {
+                cell.titleLabel.text = exerciseTitle
+                DispatchQueue.global().async {
+                    if let imageData = try? Data(contentsOf: URL(string: exerciseImageURL)!) {
+                        let image = UIImage(data: imageData)
+                        DispatchQueue.main.async {
+                            cell.imageView.image = image
+                        }
                     }
                 }
             }
+            
+            return cell
+        } else if collectionView == self.planCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlanCell", for: indexPath) as! PlanCollectionViewCell
+            
+            let plan = plans[indexPath.item]
+            if let planName = plan["name"] as? String {
+                cell.titleLabel.text = planName
+            }
+            return cell
         }
         
-        
-        return cell
+        return UICollectionViewCell()
     }
-    
-    
-    // Collection view delegate flow layout methods
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 200, height: 200)
@@ -295,7 +424,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
-
+    
+    
 }
+
+
 
 

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ExerciseCollectionViewCell: UICollectionViewCell {
 
@@ -34,17 +35,14 @@ class ExerciseCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        // Add and configure UI elements
         contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
         
-        // Set up layout constraints for the image view
         imageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(150)
         }
         
-        // Set up layout constraints for the title label
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(15)
                 make.leading.trailing.equalToSuperview()
