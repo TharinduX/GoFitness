@@ -250,11 +250,12 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             }
             
             if let exercises = exercises {
-                self.exercisePickerData = exercises
+                self.exercisePickerData = exercises.map { $0.1 }
                 self.exercisePickerView.reloadAllComponents()
             }
         }
     }
+
     
     @objc func saveButtonTapped() {
         // Retrieve the user ID

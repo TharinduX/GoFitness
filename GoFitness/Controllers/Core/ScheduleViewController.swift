@@ -94,7 +94,6 @@ class ScheduleViewController: UIViewController, UITableViewDataSource, UITableVi
 
         let plan = plans[indexPath.row]
         cell.configure(with: plan, navigationController: navigationController)
-        
         cell.backgroundColor = UIColor(named: "background")
         return cell
     }

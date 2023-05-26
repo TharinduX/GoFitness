@@ -210,7 +210,7 @@ class FirebaseManager {
         }
     }
     
-    func fetchExercisesFromFirestore(completion: @escaping ([Exercise]?, Error?) -> Void) {
+    func fetchExercisesFromFirestore(completion: @escaping ([(String, Exercise)]?, Error?) -> Void) {
         db.collection("exercises").getDocuments { (snapshot, error) in
             if let error = error {
                 completion(nil, error)
@@ -218,12 +218,12 @@ class FirebaseManager {
             }
             
             if let snapshot = snapshot {
-                var exercises = [Exercise]()
+                var exercises = [(String, Exercise)]()
                 for document in snapshot.documents {
                     if let exerciseData = document.data() as? [String: Any],
                        let name = exerciseData["name"] as? String {
                         let exercise = Exercise(name: name, video: "", image: "", description: "", bodyParts: [], sets: 0, reps: 0)
-                        exercises.append(exercise)
+                        exercises.append((document.documentID, exercise))
                     }
                 }
                 
@@ -231,6 +231,34 @@ class FirebaseManager {
             }
         }
     }
+    
+    func deletePlan(with planName: String, completion: @escaping (Error?) -> Void) {
+        let plansCollection = db.collection("plans")
+        
+        plansCollection.whereField("name", isEqualTo: planName).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(error)
+                return
+            }
+            
+            guard let documents = snapshot?.documents else {
+                completion(nil)
+                return
+            }
+            
+            // Delete the found plans
+            for document in documents {
+                plansCollection.document(document.documentID).delete { error in
+                    if let error = error {
+                        completion(error)
+                    }
+                }
+            }
+            
+            completion(nil)
+        }
+    }
+
 }
     
 

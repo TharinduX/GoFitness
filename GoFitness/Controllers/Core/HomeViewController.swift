@@ -297,7 +297,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     // Fetch custom plans from Firebase
-    private func fetchCustomPlans() {
+   func fetchCustomPlans() {
         FirebaseManager.shared.getCustomPlans { [weak self] plans, error in
             if let error = error {
                 print("Error retrieving plans: \(error.localizedDescription)")
