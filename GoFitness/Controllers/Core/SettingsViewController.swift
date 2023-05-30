@@ -11,6 +11,11 @@ import Firebase
 
 class SettingsViewController: UIViewController {
     
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        return scrollView
+    }()
+    
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Settings"
@@ -32,64 +37,148 @@ class SettingsViewController: UIViewController {
     
     let nameLabel: UILabel = {
         let label = UILabel()
+        label.text = "Name"
         label.font = UIFont(name: "OpenSans-Regular", size: 17)
-        label.textColor = .white
+        label.textColor = UIColor(named: "primary")
         return label
+    }()
+    
+    let nameTextField: UITextField = {
+        let textField = UITextField()
+        textField.font = UIFont(name: "OpenSans-Regular", size: 17)
+        textField.textColor = .white
+        textField.addBottomBorder(color: UIColor(named: "bg-secondary") ?? .darkGray, height: 1)
+        textField.isUserInteractionEnabled = false
+        return textField
     }()
     
     let heightLabel: UILabel = {
         let label = UILabel()
+        label.text = "Height"
         label.font = UIFont(name: "OpenSans-Regular", size: 17)
-        label.textColor = .white
+        label.textColor = UIColor(named: "primary")
         return label
+    }()
+    
+    let heightTextField: UITextField = {
+        let textField = UITextField()
+        textField.font = UIFont(name: "OpenSans-Regular", size: 17)
+        textField.textColor = .white
+        textField.addBottomBorder(color: UIColor(named: "bg-secondary") ?? .darkGray, height: 1)
+        textField.isUserInteractionEnabled = false
+        return textField
     }()
     
     let weightLabel: UILabel = {
         let label = UILabel()
+        label.text = "Weight"
         label.font = UIFont(name: "OpenSans-Regular", size: 17)
-        label.textColor = .white
+        label.textColor = UIColor(named: "primary")
         return label
+    }()
+    
+    let weightTextField: UITextField = {
+        let textField = UITextField()
+        textField.font = UIFont(name: "OpenSans-Regular", size: 17)
+        textField.textColor = .white
+        textField.addBottomBorder(color: UIColor(named: "bg-secondary") ?? .darkGray, height: 1)
+        textField.isUserInteractionEnabled = false
+        return textField
     }()
     
     let ageLabel: UILabel = {
         let label = UILabel()
+        label.text = "Age"
         label.font = UIFont(name: "OpenSans-Regular", size: 17)
-        label.textColor = .white
+        label.textColor = UIColor(named: "primary")
         return label
+    }()
+    
+    let ageTextField: UITextField = {
+        let textField = UITextField()
+        textField.font = UIFont(name: "OpenSans-Regular", size: 17)
+        textField.textColor = .white
+        textField.addBottomBorder(color: UIColor(named: "bg-secondary") ?? .darkGray, height: 1)
+        textField.isUserInteractionEnabled = false
+        return textField
     }()
     
     let fitnessGoalLabel: UILabel = {
         let label = UILabel()
+        label.text = "Fitness Goal"
         label.font = UIFont(name: "OpenSans-Regular", size: 17)
-        label.textColor = .white
+        label.textColor = UIColor(named: "primary")
         return label
+    }()
+    
+    let fitnessGoalTextField: UITextField = {
+        let textField = UITextField()
+        textField.font = UIFont(name: "OpenSans-Regular", size: 17)
+        textField.textColor = .white
+        textField.addBottomBorder(color: UIColor(named: "bg-secondary") ?? .darkGray, height: 1)
+        textField.isUserInteractionEnabled = false
+        return textField
     }()
     
     let bmiLabel: UILabel = {
         let label = UILabel()
+        label.text = "BMI"
         label.font = UIFont(name: "OpenSans-Regular", size: 17)
-        label.textColor = .white
+        label.textColor = UIColor(named: "primary")
         return label
+    }()
+    
+    let bmiTextField: UITextField = {
+        let textField = UITextField()
+        textField.font = UIFont(name: "OpenSans-Regular", size: 17)
+        textField.textColor = .white
+        textField.addBottomBorder(color: UIColor(named: "bg-secondary") ?? .darkGray, height: 1)
+        textField.isUserInteractionEnabled = false
+        return textField
     }()
     
     let bmiConsiderationLabel: UILabel = {
         let label = UILabel()
+        label.text = "BMI Consideration"
         label.font = UIFont(name: "OpenSans-Regular", size: 17)
-        label.textColor = .white
+        label.textColor = UIColor(named: "primary")
         return label
     }()
     
+    let bmiConsiderationTextField: UITextField = {
+        let textField = UITextField()
+        textField.font = UIFont(name: "OpenSans-Regular", size: 17)
+        textField.textColor = .white
+        textField.addBottomBorder(color: UIColor(named: "bg-secondary") ?? .darkGray, height: 1)
+        textField.isUserInteractionEnabled = false
+        return textField
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(scrollView)
         view.addSubview(titleLabel)
-        view.addSubview(logoutButton)
-        view.addSubview(nameLabel)
-        view.addSubview(heightLabel)
-        view.addSubview(weightLabel)
-        view.addSubview(ageLabel)
-        view.addSubview(fitnessGoalLabel)
-        view.addSubview(bmiLabel)
-        view.addSubview(bmiConsiderationLabel)
+        view.backgroundColor = UIColor(named: "background")
+        scrollView.addSubview(logoutButton)
+        scrollView.addSubview(nameLabel)
+        scrollView.addSubview(nameTextField)
+        scrollView.addSubview(heightLabel)
+        scrollView.addSubview(heightTextField)
+        scrollView.addSubview(weightLabel)
+        scrollView.addSubview(weightTextField)
+        scrollView.addSubview(ageLabel)
+        scrollView.addSubview(ageTextField)
+        scrollView.addSubview(fitnessGoalLabel)
+        scrollView.addSubview(fitnessGoalTextField)
+        scrollView.addSubview(bmiLabel)
+        scrollView.addSubview(bmiTextField)
+        scrollView.addSubview(bmiConsiderationLabel)
+        scrollView.addSubview(bmiConsiderationTextField)
+        
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         
         titleLabel.snp.makeConstraints { make in
@@ -99,41 +188,83 @@ class SettingsViewController: UIViewController {
         
         nameLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(50)
+        }
+        
+        nameTextField.snp.makeConstraints { make in
+            make.top.equalTo(nameLabel.snp.bottom).offset(5)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(50)
+            make.height.equalTo(30)
         }
         
         heightLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(10)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.top.equalTo(nameTextField.snp.bottom).offset(10)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(50)
+        }
+        
+        heightTextField.snp.makeConstraints { make in
+            make.top.equalTo(heightLabel.snp.bottom).offset(5)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(50)
+            make.height.equalTo(30)
         }
         
         weightLabel.snp.makeConstraints { make in
-            make.top.equalTo(heightLabel.snp.bottom).offset(10)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.top.equalTo(heightTextField.snp.bottom).offset(10)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(50)
+        }
+        
+        weightTextField.snp.makeConstraints { make in
+            make.top.equalTo(weightLabel.snp.bottom).offset(5)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(50)
+            make.height.equalTo(30)
         }
         
         ageLabel.snp.makeConstraints { make in
-            make.top.equalTo(weightLabel.snp.bottom).offset(10)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.top.equalTo(weightTextField.snp.bottom).offset(10)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(50)
+        }
+        
+        ageTextField.snp.makeConstraints { make in
+            make.top.equalTo(ageLabel.snp.bottom).offset(5)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(50)
+            make.height.equalTo(30)
         }
         
         fitnessGoalLabel.snp.makeConstraints { make in
-            make.top.equalTo(ageLabel.snp.bottom).offset(10)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.top.equalTo(ageTextField.snp.bottom).offset(10)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(50)
+        }
+        
+        fitnessGoalTextField.snp.makeConstraints { make in
+            make.top.equalTo(fitnessGoalLabel.snp.bottom).offset(5)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(50)
+            make.height.equalTo(30)
         }
         
         bmiLabel.snp.makeConstraints { make in
-            make.top.equalTo(fitnessGoalLabel.snp.bottom).offset(10)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.top.equalTo(fitnessGoalTextField.snp.bottom).offset(10)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(50)
+        }
+        
+        bmiTextField.snp.makeConstraints { make in
+            make.top.equalTo(bmiLabel.snp.bottom).offset(5)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(50)
+            make.height.equalTo(30)
         }
         
         bmiConsiderationLabel.snp.makeConstraints { make in
-            make.top.equalTo(bmiLabel.snp.bottom).offset(10)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.top.equalTo(bmiTextField.snp.bottom).offset(10)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(50)
+        }
+        
+        bmiConsiderationTextField.snp.makeConstraints { make in
+            make.top.equalTo(bmiConsiderationLabel.snp.bottom).offset(5)
+            make.leading.trailing.equalTo(scrollView.safeAreaLayoutGuide).inset(50)
+            make.height.equalTo(30)
         }
         
         logoutButton.snp.makeConstraints { make in
-            make.top.equalTo(bmiConsiderationLabel.snp.bottom).offset(10)
+            make.top.equalTo(bmiConsiderationTextField.snp.bottom).offset(30)
             make.width.equalToSuperview().offset(-50)
             make.height.equalTo(55)
             make.centerX.equalToSuperview()
@@ -177,13 +308,13 @@ class SettingsViewController: UIViewController {
                       let bmiConsideration = userDetails["bmiConsideration"] as? String {
                 DispatchQueue.main.async {
                     // Update UI with user details
-                    self?.nameLabel.text = "Name: \(name)"
-                    self?.heightLabel.text = "Height: \(height) cm"
-                    self?.weightLabel.text = "Weight: \(weight) kg"
-                    self?.ageLabel.text = "Age: \(age)"
-                    self?.fitnessGoalLabel.text = "Fitness Goal: \(fitnessGoal)"
-                    self?.bmiLabel.text = "BMI: \(bmi)"
-                    self?.bmiConsiderationLabel.text = "BMI Consideration: \(bmiConsideration)"
+                    self?.nameTextField.text = name
+                    self?.heightTextField.text = String(height)
+                    self?.weightTextField.text = String(weight)
+                    self?.ageTextField.text = String(age)
+                    self?.fitnessGoalTextField.text = fitnessGoal
+                    self?.bmiTextField.text = String(bmi)
+                    self?.bmiConsiderationTextField.text = bmiConsideration
                 }
             } else {
                 print("User details not found or user not logged in")

@@ -14,6 +14,7 @@ class FirebaseManager {
     
     private init() {}
     
+    //save user details
     func saveUserDetails(_ userDetails: UserDetails, completion: @escaping (Error?) -> Void) {
         let userDetailsRef = db.collection("userDetails").document()
         
@@ -33,6 +34,7 @@ class FirebaseManager {
         }
     }
     
+    //get logged in user details
     func getUserDetails(completion: @escaping ([String: Any]?, Error?) -> Void) {
         if let uid = Auth.auth().currentUser?.uid {
 
@@ -58,85 +60,77 @@ class FirebaseManager {
         }
     }
     
+    //get logged in user plans for bmi consideration
     func getUserPlan(completion: @escaping ([String: Any]?, Error?) -> Void) {
-        let db = Firestore.firestore() // Get the Firestore instance
-        let userDetailsCollection = db.collection("userDetails") // Get the userDetails collection
+        let db = Firestore.firestore()
+        let userDetailsCollection = db.collection("userDetails") 
         
-        // Query the userDetails collection to find the user with the specified UID
         let uid = Auth.auth().currentUser?.uid
         let userDetailsQuery = userDetailsCollection.whereField("userId", isEqualTo: uid as Any)
         
         userDetailsQuery.getDocuments { (snapshot, error) in
             if let error = error {
-                // Handle the error
                 completion(nil, error)
                 return
             }
             
             guard let snapshot = snapshot else {
-                // Handle the case where snapshot is nil
                 completion(nil, nil)
                 return
             }
             
             if let userDetailsDoc = snapshot.documents.first,
                let bmiConsideration = userDetailsDoc.data()["bmiConsideration"] as? String {
-                let plansCollection = db.collection("plans") // Get the plans collection
+                let plansCollection = db.collection("plans")
                 
                 // Query the plans collection to find the plans for the BMI consideration
                 let plansQuery = plansCollection.whereField("planFor", isEqualTo: bmiConsideration)
                 
                 plansQuery.getDocuments { (plansSnapshot, plansError) in
                     if let plansError = plansError {
-                        // Handle the error
                         completion(nil, plansError)
                         return
                     }
                     
                     guard let plansSnapshot = plansSnapshot else {
-                        // Handle the case where plansSnapshot is nil
                         completion(nil, nil)
                         return
                     }
                     
                     if let planDetails = plansSnapshot.documents.first?.data() {
-                        // Return the plan details
                         completion(planDetails, nil)
                     } else {
-                        // Handle the case where no matching plan is found
                         completion(nil, nil)
                     }
                 }
                 
             } else {
-                // Handle the case where no matching user is found or no BMI consideration value is present
                 completion(nil, nil)
             }
         }
     }
     
+    //save cutom plans for firebase
     func savePlanToFirestore(userId: String, selectedExercise: Exercise, selectedSets: Int, selectedReps: Int, scheduleName: String, description: String) {
         
+        print(selectedExercise.name)
         let db = Firestore.firestore()
         db.collection("exercises").whereField("name", isEqualTo: selectedExercise.name).getDocuments { [weak self] (snapshot, error) in
-            guard let self = self else { return }
+            guard self != nil else { return }
             
             if let error = error {
-                // Handle the case where an error occurred while fetching the exercise data
                 print("Error fetching exercise: \(error.localizedDescription)")
                 return
             }
             
             if let snapshot = snapshot {
                 if let document = snapshot.documents.first {
-                    // Extract the exercise data from the fetched document
                     let exerciseData = document.data()
                     if let video = exerciseData["video"] as? String,
                        let image = exerciseData["image"] as? String,
                        let exerciseDescription = exerciseData["description"] as? String,
                        let bodyParts = exerciseData["bodyParts"] as? [String] {
                         
-                        // Create the Exercise object with the fetched exercise data
                         let exercise = Exercise(name: selectedExercise.name, video: video, image: image, description: exerciseDescription, bodyParts: bodyParts, sets: selectedSets, reps: selectedReps)
                         
                         // Create the Plans object
@@ -172,16 +166,15 @@ class FirebaseManager {
                         }
                     }
                 } else {
-                    // Handle the case where the exercise document does not exist
                     print("Exercise document does not exist")
                 }
             }
         }
     }
     
+    //get logged in user custom plans
     func getCustomPlans(completion: @escaping ([[String: Any]]?, Error?) -> Void) {
         guard let currentUser = Auth.auth().currentUser else {
-            // Handle the case where the current user is not available
             let error = NSError(domain: "CustomPlansErrorDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: "Current user not available"])
             completion(nil, error)
             return
@@ -192,7 +185,6 @@ class FirebaseManager {
         
         plansRef.whereField("userId", isEqualTo: userUID).whereField("type", isEqualTo: "").getDocuments { (snapshot, error) in
             if let error = error {
-                // Handle the error
                 completion(nil, error)
                 return
             }
@@ -210,7 +202,8 @@ class FirebaseManager {
         }
     }
     
-    func fetchExercisesFromFirestore(completion: @escaping ([Exercise]?, Error?) -> Void) {
+    //get exersices from the exercises collection
+    func fetchExercisesFromFirestore(completion: @escaping ([(String, Exercise)]?, Error?) -> Void) {
         db.collection("exercises").getDocuments { (snapshot, error) in
             if let error = error {
                 completion(nil, error)
@@ -218,12 +211,12 @@ class FirebaseManager {
             }
             
             if let snapshot = snapshot {
-                var exercises = [Exercise]()
+                var exercises = [(String, Exercise)]()
                 for document in snapshot.documents {
                     if let exerciseData = document.data() as? [String: Any],
                        let name = exerciseData["name"] as? String {
                         let exercise = Exercise(name: name, video: "", image: "", description: "", bodyParts: [], sets: 0, reps: 0)
-                        exercises.append(exercise)
+                        exercises.append((document.documentID, exercise))
                     }
                 }
                 
@@ -231,6 +224,138 @@ class FirebaseManager {
             }
         }
     }
+
+    
+    //delete custom plan
+    func deletePlan(with planName: String, completion: @escaping (Error?) -> Void) {
+        let plansCollection = db.collection("plans")
+        
+        plansCollection.whereField("name", isEqualTo: planName).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(error)
+                return
+            }
+            
+            guard let documents = snapshot?.documents else {
+                completion(nil)
+                return
+            }
+            
+            // Delete the found plans
+            for document in documents {
+                plansCollection.document(document.documentID).delete { error in
+                    if let error = error {
+                        completion(error)
+                    }
+                }
+            }
+            
+            completion(nil)
+        }
+    }
+    
+    //get one exercise from the firestore
+    func getExerciseDataFromFirestore(documentID: String, completion: @escaping ([String: Any]?, Error?) -> Void) {
+        let exerciseRef = db.collection("exercises").document(documentID)
+        exerciseRef.getDocument { (snapshot, error) in
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+            
+            if let snapshot = snapshot, let exerciseData = snapshot.data() {
+                completion(exerciseData, nil)
+            } else {
+                completion(nil, nil)
+            }
+        }
+    }
+
+    func updatePlan(planName: String, exercise: Exercise) {
+        let db = Firestore.firestore()
+        
+        db.collection("plans").whereField("name", isEqualTo: planName).getDocuments { [weak self] (snapshot, error) in
+            guard self != nil else { return }
+            
+            if let error = error {
+                print("Error fetching plan: \(error.localizedDescription)")
+                return
+            }
+            
+            if let snapshot = snapshot {
+                // Assuming there's only one document with the given plan name
+                if let document = snapshot.documents.first {
+                    let documentID = document.documentID
+                    
+                    db.collection("plans").document(documentID).getDocument { (documentSnapshot, error) in
+                        if let error = error {
+                            print("Error fetching plan document: \(error.localizedDescription)")
+                            return
+                        }
+                        
+                        if let documentSnapshot = documentSnapshot, documentSnapshot.exists {
+                            var updatedExercises: [Exercise] = []
+                            
+                            if let planData = documentSnapshot.data(),
+                               let existingExercises = planData["exercises"] as? [[String: Any]] {
+                                for existingExercise in existingExercises {
+                                    if let existingName = existingExercise["name"] as? String {
+                                        if existingName == exercise.name {
+                                            // Exercise already exists in the plan, no need to add it again
+                                            print("Exercise already exists in the plan.")
+                                            return
+                                        }
+                                    }
+                                    
+                                    if let name = existingExercise["name"] as? String,
+                                       let video = existingExercise["video"] as? String,
+                                       let image = existingExercise["image"] as? String,
+                                       let description = existingExercise["description"] as? String,
+                                       let bodyParts = existingExercise["bodyParts"] as? [String],
+                                       let sets = existingExercise["sets"] as? Int,
+                                       let reps = existingExercise["reps"] as? Int {
+                                        let existingExercise = Exercise(name: name, video: video, image: image, description: description, bodyParts: bodyParts, sets: sets, reps: reps)
+                                        updatedExercises.append(existingExercise)
+                                    }
+                                }
+                            }
+                            
+                            // Append the new exercise to the updatedExercises array
+                            updatedExercises.append(exercise)
+                            
+                            // Update the exercises field in the plan document
+                            let updatedData: [String: Any] = [
+                                "exercises": updatedExercises.map { exercise in
+                                    return [
+                                        "name": exercise.name,
+                                        "video": exercise.video,
+                                        "image": exercise.image,
+                                        "description": exercise.description,
+                                        "bodyParts": exercise.bodyParts,
+                                        "sets": exercise.sets,
+                                        "reps": exercise.reps
+                                    ]
+                                }
+                            ]
+                            
+                            db.collection("plans").document(documentID).updateData(updatedData) { error in
+                                if let error = error {
+                                    print("Error updating plan: \(error.localizedDescription)")
+                                } else {
+                                    print("Plan updated successfully")
+                                }
+                            }
+                        } else {
+                            print("Plan document does not exist")
+                        }
+                    }
+                } else {
+                    print("Plan document does not exist")
+                }
+            }
+        }
+    }
+
 }
     
 
