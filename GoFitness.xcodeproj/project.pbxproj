@@ -40,7 +40,6 @@
 		81E15CCA2A116E440011756B /* OpenSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81E15CC62A116E440011756B /* OpenSans-Medium.ttf */; };
 		81E15CCB2A116E440011756B /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81E15CC72A116E440011756B /* OpenSans-Regular.ttf */; };
 		81E15CCC2A116E440011756B /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81E15CC82A116E440011756B /* OpenSans-Bold.ttf */; };
-		81F4F6CD2A0B893B0085A0EB /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6CC2A0B893B0085A0EB /* WelcomeViewController.swift */; };
 		81F4F6D02A0B89B10085A0EB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6CF2A0B89B10085A0EB /* HomeViewController.swift */; };
 		81F4F6D22A0B8A250085A0EB /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6D12A0B8A250085A0EB /* TabBarViewController.swift */; };
 		81F4F6D92A0B8AA00085A0EB /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F4F6D82A0B8AA00085A0EB /* CustomViewController.swift */; };
@@ -80,7 +79,6 @@
 		81E15CC62A116E440011756B /* OpenSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Medium.ttf"; path = "../../../../../../Downloads/Open_Sans/static/OpenSans-Medium.ttf"; sourceTree = "<group>"; };
 		81E15CC72A116E440011756B /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Regular.ttf"; path = "../../../../../../Downloads/Open_Sans/static/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		81E15CC82A116E440011756B /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Bold.ttf"; path = "../../../../../../Downloads/Open_Sans/static/OpenSans-Bold.ttf"; sourceTree = "<group>"; };
-		81F4F6CC2A0B893B0085A0EB /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		81F4F6CF2A0B89B10085A0EB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		81F4F6D12A0B8A250085A0EB /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		81F4F6D82A0B8AA00085A0EB /* CustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
@@ -239,7 +237,6 @@
 			isa = PBXGroup;
 			children = (
 				81D7D0D72A0B6706005E2937 /* AuthViewController.swift */,
-				81F4F6CC2A0B893B0085A0EB /* WelcomeViewController.swift */,
 				81AE4C4F2A13F9AF005E6CAD /* SignUpViewController.swift */,
 				8187804B2A18BDB800FB2415 /* ExerciseDetailViewController.swift */,
 				817539BC2A194E6E009651EC /* SingleScheduleViewController.swift */,
@@ -355,7 +352,6 @@
 				8187804C2A18BDB800FB2415 /* ExerciseDetailViewController.swift in Sources */,
 				81C5332E2A1676F6001290D5 /* ActivityIndicator.swift in Sources */,
 				81D7D0D82A0B6706005E2937 /* AuthViewController.swift in Sources */,
-				81F4F6CD2A0B893B0085A0EB /* WelcomeViewController.swift in Sources */,
 				81D7D0D42A0B6706005E2937 /* AppDelegate.swift in Sources */,
 				817539BF2A195116009651EC /* ExerciseTableViewCell.swift in Sources */,
 				813F09992A121933007CB91B /* UITextField+Additions.swift in Sources */,

@@ -78,6 +78,7 @@ class ExerciseTableViewCell: UITableViewCell {
 
     }
     
+    //cell tapped 
     @objc private func cellTapped() {
         if let exercise = exercise,
            let navigationController = navigationController {
@@ -88,6 +89,7 @@ class ExerciseTableViewCell: UITableViewCell {
     }
     
     
+    //congifure the table view with name and description
     func configure(with exercise: [String: Any], navigationController: UINavigationController?) {
         self.exercise = exercise
         self.navigationController = navigationController

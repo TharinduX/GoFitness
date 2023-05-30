@@ -11,6 +11,8 @@ import Firebase
 
 class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
+    
+    //Setup views
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Custom Schedule"
@@ -47,7 +49,7 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let label = UILabel()
         label.text = "Description"
         label.font = UIFont(name: "OpenSans-Regular", size: 17)
-        label.textColor = UIColor(named: "primary")
+        label.textColor = .systemGray
         label.textAlignment = .left
         return label
     }()
@@ -221,6 +223,7 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         view.endEditing(true)
     }
     
+    //make the textfield non editable - otherwise can delete the values
     class NonEditableTextField: UITextField {
         override func caretRect(for position: UITextPosition) -> CGRect {
             return CGRect.zero
@@ -231,6 +234,7 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     
+    //handling UI picker view
     func createToolbar(for textField: UITextField) -> UIToolbar {
         let toolbar = UIToolbar()
         toolbar.barStyle = .default
@@ -251,6 +255,7 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         view.endEditing(true)
     }
     
+    //fetch exercises for the UI picker
     func fetchExercises() {
         FirebaseManager.shared.fetchExercisesFromFirestore { [weak self] (exercises, error) in
             guard let self = self else { return }
@@ -267,7 +272,7 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     
-    
+    //Handling Save button 
     @objc func saveButtonTapped() {
         
         ActivityIndicator.shared.show(in: view)

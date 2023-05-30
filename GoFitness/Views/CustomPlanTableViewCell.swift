@@ -77,6 +77,7 @@ class CustomPlanTableViewCell: UITableViewCell {
         
     }
     
+    //cell tapped
     @objc private func cellTapped() {
         if let plan = plan,
            let navigationController = navigationController {
@@ -86,6 +87,7 @@ class CustomPlanTableViewCell: UITableViewCell {
         }
     }
     
+    //configure the custom plan table view
     func configure(with plan: [String: Any], navigationController: UINavigationController?) {
         self.plan = plan
         self.navigationController = navigationController

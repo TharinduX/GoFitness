@@ -11,6 +11,8 @@ import Firebase
 
 class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
+    
+    // Setup views
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "userdetails")
@@ -284,7 +286,7 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
     }
     
     
-    
+    // handle the tap after selecting the picker view
     @objc private func handleTap() {
         view.endEditing(true)
     }
@@ -305,6 +307,7 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
         return toolbar
     }
     
+    //picker view done button handling
     @objc func doneButtonTapped() {
         view.endEditing(true)
     }
@@ -372,8 +375,6 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     // Inside the action method for the "Complete Profile" button
     @objc func completeButtonTapped() {
-
-        // Clear previous error messages
         clearErrorLabels()
 
         // Validate the user details
@@ -443,6 +444,7 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
         }
     }
 
+    //clear the errors
     private func clearErrorLabels() {
         nameErrorLabel.text = ""
         heightErrorLabel.text = ""
@@ -464,6 +466,7 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
         }
     }
     
+    // BMI calculation
     private func calculateBMI(height: Double, weight: Double) -> (bmi: Double, consideration: String) {
         let heightInMeters = height / 100 // Convert height to meters
         let bmi = weight / (heightInMeters * heightInMeters)

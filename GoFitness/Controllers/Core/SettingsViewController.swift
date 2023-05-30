@@ -11,6 +11,7 @@ import Firebase
 
 class SettingsViewController: UIViewController {
     
+    //Setup views
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         return scrollView
@@ -274,6 +275,7 @@ class SettingsViewController: UIViewController {
         fetchUserDetails()
     }
     
+    // Logout button handler
     @objc private func logoutButtonTapped() {
         ActivityIndicator.shared.show(in: view)
         do {
@@ -285,14 +287,15 @@ class SettingsViewController: UIViewController {
         }
     }
     
+    //Navigate to login screen
     private func navigateToLoginScreen() {
-        // Example: If you have a LoginViewController, you can navigate to it using a navigation controller
         let loginVC = AuthViewController()
         let navController = UINavigationController(rootViewController: loginVC)
         navController.modalPresentationStyle = .fullScreen
         present(navController, animated: true, completion: nil)
     }
     
+    //Fetching the userdetails from the database
     private func fetchUserDetails() {
         FirebaseManager.shared.getUserDetails { [weak self] userDetails, error in
             if let error = error {

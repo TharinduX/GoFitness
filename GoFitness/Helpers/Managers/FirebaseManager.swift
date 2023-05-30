@@ -271,6 +271,7 @@ class FirebaseManager {
         }
     }
 
+    //update the existing plan with new exercise
     func updatePlan(planName: String, exercise: Exercise) {
         let db = Firestore.firestore()
         
