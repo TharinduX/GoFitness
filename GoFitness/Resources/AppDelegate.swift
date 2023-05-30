@@ -18,6 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         let window = UIWindow(frame: UIScreen.main.bounds)
+        
+        if #available(iOS 13.0, *) {
+            window.overrideUserInterfaceStyle = .dark
+        }
+        
         if AuthManager.shared.isSignedIn {
             if let userId = Auth.auth().currentUser?.uid {
                 let userDetailsRef = Firestore.firestore().collection("userDetails")

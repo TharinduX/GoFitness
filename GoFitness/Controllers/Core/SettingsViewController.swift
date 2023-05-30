@@ -159,6 +159,7 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(scrollView)
         view.addSubview(titleLabel)
+        view.backgroundColor = UIColor(named: "background")
         scrollView.addSubview(logoutButton)
         scrollView.addSubview(nameLabel)
         scrollView.addSubview(nameTextField)

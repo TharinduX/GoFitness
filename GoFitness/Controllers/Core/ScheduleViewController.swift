@@ -40,6 +40,7 @@ class ScheduleViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "background")
+        navigationController?.navigationBar.isHidden = true
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
         view.addSubview(planTableView)

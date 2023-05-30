@@ -27,6 +27,13 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         return label
     }()
     
+    let errorLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "OpenSans-Regular", size: 10)
+        label.textColor = .red
+        return label
+    }()
+    
     let nameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Schedule name"
@@ -123,6 +130,7 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         view.backgroundColor = UIColor(named: "background")
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
+        view.addSubview(errorLabel)
         view.addSubview(nameTextField)
         view.addSubview(descriptionLabel)
         view.addSubview(descriptionTextView)
@@ -157,8 +165,13 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
         }
         
+        errorLabel.snp.makeConstraints { make in
+            make.top.equalTo(subtitleLabel.snp.bottom).offset(5)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+        }
+        
         nameTextField.snp.makeConstraints { make in
-            make.top.equalTo(subtitleLabel.snp.bottom).offset(30)
+            make.top.equalTo(errorLabel.snp.bottom).offset(30)
             make.leading.equalToSuperview().offset(50)
             make.trailing.equalToSuperview().offset(-50)
             make.height.equalTo(50)
@@ -210,12 +223,10 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     class NonEditableTextField: UITextField {
         override func caretRect(for position: UITextPosition) -> CGRect {
-            // Return an empty rectangle to hide the cursor
             return CGRect.zero
         }
         
         override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-            // Disable all text interaction actions (e.g., copy, paste, select, etc.)
             return false
         }
     }
@@ -255,21 +266,20 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             }
         }
     }
-
+    
     
     @objc func saveButtonTapped() {
-        // Retrieve the user ID
+        
         ActivityIndicator.shared.show(in: view)
         guard let userId = Auth.auth().currentUser?.uid else {
-            // Handle the case where the user is not logged in
-            print("User is not logged in")
+            
+            showErrorMessage("User is not logged in")
             return
         }
-
-        // Retrieve the schedule name and description
+        
         guard let scheduleName = nameTextField.text, !scheduleName.isEmpty,
             let description = descriptionTextView.text, !description.isEmpty else {
-                // Handle the case where the schedule name or description is empty
+            ActivityIndicator.shared.hide()
                 print("Schedule name or description is empty")
                 return
         }
@@ -293,53 +303,55 @@ class CustomViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         navController.modalPresentationStyle = .fullScreen
         self.present(navController, animated: true, completion: nil)
     }
-
-        
-        
-        
-        // MARK: - UIPickerViewDataSource
-        
-        func numberOfComponents(in pickerView: UIPickerView) -> Int {
-            return 1
-        }
-        
-        func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-            if pickerView == exercisePickerView {
-                return exercisePickerData.count
-            } else if pickerView == repsPickerView {
-                return reps.count
-            }else if pickerView == setsPickerView {
-                return sets.count
-            } else {
-                return 0
-            }
-        }
-        
-        // MARK: - UIPickerViewDelegate
-        
-        func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-            if pickerView == exercisePickerView {
-                return exercisePickerData[row].name
-            } else if pickerView == repsPickerView {
-                return "\(reps[row])"
-            } else if pickerView == setsPickerView {
-                return "\(sets[row])"
-            }else {
-                return nil
-            }
-        }
-        
-        func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-            if pickerView == exercisePickerView {
-                let selectedExercise = exercisePickerData[row]
-                exerciseTextField.text = selectedExercise.name
-            } else if pickerView == repsPickerView {
-                let selectedRep = reps[row]
-                repsTextField.text = "\(selectedRep)"
-            }else if pickerView == setsPickerView {
-                let selectedSet = sets[row]
-                setsTextField.text = "\(selectedSet)"
-            }
+    
+    
+    // MARK: - UIPickerViewDataSource
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView == exercisePickerView {
+            return exercisePickerData.count
+        } else if pickerView == repsPickerView {
+            return reps.count
+        }else if pickerView == setsPickerView {
+            return sets.count
+        } else {
+            return 0
         }
     }
     
+    // MARK: - UIPickerViewDelegate
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerView == exercisePickerView {
+            return exercisePickerData[row].name
+        } else if pickerView == repsPickerView {
+            return "\(reps[row])"
+        } else if pickerView == setsPickerView {
+            return "\(sets[row])"
+        }else {
+            return nil
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == exercisePickerView {
+            let selectedExercise = exercisePickerData[row]
+            exerciseTextField.text = selectedExercise.name
+        } else if pickerView == repsPickerView {
+            let selectedRep = reps[row]
+            repsTextField.text = "\(selectedRep)"
+        }else if pickerView == setsPickerView {
+            let selectedSet = sets[row]
+            setsTextField.text = "\(selectedSet)"
+        }
+    }
+    
+    private func showErrorMessage(_ message: String) {
+        errorLabel.text = message
+    }
+}
+

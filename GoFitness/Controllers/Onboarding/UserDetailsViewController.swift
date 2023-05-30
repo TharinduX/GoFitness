@@ -457,13 +457,10 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
 
     private func updateUIAfterSavingUserDetails(error: Error?) {
         if let error = error {
-            // Show error message or handle the error in some way
             print("Error occurred while saving user details: \(error.localizedDescription)")
         } else {
-            // User details saved successfully
             print("User details saved successfully")
             
-            // Perform any additional UI updates or navigate to the next screen
         }
     }
     
@@ -471,10 +468,8 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
         let heightInMeters = height / 100 // Convert height to meters
         let bmi = weight / (heightInMeters * heightInMeters)
         
-        // Format the BMI value to two decimal points
         let formattedBMI = String(format: "%.2f", bmi)
-        
-        // Determine the BMI consideration based on the BMI value
+
         let consideration: String
         if bmi < 18.5 {
             consideration = "underweight"
@@ -485,12 +480,11 @@ class UserDetailsViewController: UIViewController, UIPickerViewDelegate, UIPicke
         } else {
             consideration = "obese"
         }
-        
-        // Convert the formatted BMI value back to a Double
+
         if let roundedBMI = Double(formattedBMI) {
             return (roundedBMI, consideration)
         } else {
-            return (0.0, "Unknown") // Return default values if the conversion fails
+            return (0.0, "Unknown")
         }
     }
 

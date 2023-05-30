@@ -10,9 +10,10 @@ import SnapKit
 import Firebase
 
 class ExerciseAddViewController: UIViewController,  UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
-
+    
     var plan: [String: Any]?
-
+    var selectedExerciseDocumentID: String?
+    
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -87,7 +88,7 @@ class ExerciseAddViewController: UIViewController,  UIPickerViewDelegate, UIPick
         return button
     }()
     
-    var exercisePickerData: [Exercise] = [] 
+    var exercisePickerData: [(String, Exercise)] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,7 +148,7 @@ class ExerciseAddViewController: UIViewController,  UIPickerViewDelegate, UIPick
             make.top.equalTo(setsTextField.snp.bottom).offset(50)
             make.centerX.equalToSuperview()
             make.leading.trailing.equalTo(exerciseTextField)
-            make.height.equalTo(55) 
+            make.height.equalTo(55)
         }
         
         
@@ -191,26 +192,57 @@ class ExerciseAddViewController: UIViewController,  UIPickerViewDelegate, UIPick
             }
             
             if let exercises = exercises {
-                self.exercisePickerData = exercises.map { $0.1 }
+                self.exercisePickerData = exercises
                 self.exercisePickerView.reloadAllComponents()
             }
         }
     }
-
     
     @objc func saveButtonTapped() {
+        ActivityIndicator.shared.show(in: view)
+        guard let selectedExerciseDocumentID = selectedExerciseDocumentID else {
+            print("No exercise selected.")
+            return
+        }
         
-        
+        FirebaseManager.shared.getExerciseDataFromFirestore(documentID: selectedExerciseDocumentID) { (exerciseData, error) in
+            if let error = error {
+                print("Error retrieving exercise data: \(error.localizedDescription)")
+                return
+            }
+            if let exerciseData = exerciseData {
+                if let name = exerciseData["name"] as? String,
+                   let video = exerciseData["video"] as? String,
+                   let image = exerciseData["image"] as? String,
+                   let description = exerciseData["description"] as? String,
+                   let bodyParts = exerciseData["bodyParts"] as? [String],
+                   let sets = Int(self.setsTextField.text ?? ""),
+                   let reps = Int(self.repsTextField.text ?? "") {
+                    let exercise = Exercise(name: name, video: video, image: image, description: description, bodyParts: bodyParts, sets: sets, reps: reps)
+                    FirebaseManager.shared.updatePlan(planName: self.plan?["name"] as? String ?? "", exercise: exercise)
+                    print("Plan updated successfully")
+                    DispatchQueue.main.async {
+                        if let homeViewController = self.navigationController?.viewControllers.first as? HomeViewController {
+                            homeViewController.fetchCustomPlans()
+                        }
+                        self.navigateToHome()
+                    }
+                }
+            }
+        }
+    }
+    
+    private func navigateToHome() {
+        self.navigationController?.popToRootViewController(animated: true)
+        ActivityIndicator.shared.hide()
     }
     
     class NonEditableTextField: UITextField {
         override func caretRect(for position: UITextPosition) -> CGRect {
-            // Return an empty rectangle to hide the cursor
             return CGRect.zero
         }
         
         override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-            // Disable all text interaction actions (e.g., copy, paste, select, etc.)
             return false
         }
     }
@@ -226,7 +258,7 @@ class ExerciseAddViewController: UIViewController,  UIPickerViewDelegate, UIPick
             return exercisePickerData.count
         } else if pickerView == repsPickerView {
             return reps.count
-        }else if pickerView == setsPickerView {
+        } else if pickerView == setsPickerView {
             return sets.count
         } else {
             return 0
@@ -237,12 +269,12 @@ class ExerciseAddViewController: UIViewController,  UIPickerViewDelegate, UIPick
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView == exercisePickerView {
-            return exercisePickerData[row].name
+            return exercisePickerData[row].1.name
         } else if pickerView == repsPickerView {
             return "\(reps[row])"
         } else if pickerView == setsPickerView {
             return "\(sets[row])"
-        }else {
+        } else {
             return nil
         }
     }
@@ -250,16 +282,18 @@ class ExerciseAddViewController: UIViewController,  UIPickerViewDelegate, UIPick
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == exercisePickerView {
             let selectedExercise = exercisePickerData[row]
-            exerciseTextField.text = selectedExercise.name
+            exerciseTextField.text = selectedExercise.1.name
+            selectedExerciseDocumentID = selectedExercise.0
         } else if pickerView == repsPickerView {
             let selectedRep = reps[row]
             repsTextField.text = "\(selectedRep)"
-        }else if pickerView == setsPickerView {
+        } else if pickerView == setsPickerView {
             let selectedSet = sets[row]
             setsTextField.text = "\(selectedSet)"
         }
     }
     
-
+    
+    
     
 }

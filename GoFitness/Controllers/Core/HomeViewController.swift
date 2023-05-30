@@ -23,6 +23,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    let refreshControl = UIRefreshControl()
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         return scrollView
@@ -63,6 +65,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 10
         imageView.layer.cornerCurve = .continuous
+        
         return imageView
     }()
     
@@ -101,8 +104,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
-        // Configure other properties of the collection view
         return collectionView
     }()
     
@@ -136,11 +137,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        scrollView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         view.backgroundColor = UIColor(named: "background")
         navigationController?.navigationBar.isHidden = true
-        
-        
         let savedStepCount = UserDefaults.standard.integer(forKey: stepCountKey)
         stepCount = savedStepCount
         
@@ -260,7 +260,26 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.backgroundColor = UIColor(named: "background")
         planCollectionView.backgroundColor = UIColor(named: "background")
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
+            imageView.isUserInteractionEnabled = true
+            imageView.addGestureRecognizer(tapGesture)
+        
     }
+    
+    @objc private func refreshData() {
+        refreshControl.beginRefreshing()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.fetchCustomPlans()
+            self.refreshControl.endRefreshing()
+        }
+    }
+    
+    @objc func imageViewTapped() {
+        self.tabBarController?.selectedIndex = 3
+        let settingsViewController = SettingsViewController()
+        self.navigationController?.pushViewController(settingsViewController, animated: true)
+    }
+
     
     // Fetch suggested plan from Firebase
     private func fetchSuggestedPlan() {
@@ -297,20 +316,25 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     // Fetch custom plans from Firebase
-   func fetchCustomPlans() {
+    func fetchCustomPlans() {
         FirebaseManager.shared.getCustomPlans { [weak self] plans, error in
             if let error = error {
                 print("Error retrieving plans: \(error.localizedDescription)")
             } else if let plans = plans, !plans.isEmpty {
-                self?.plans = plans
                 DispatchQueue.main.async {
                     self?.planCollectionView.reloadData()
                 }
+                self?.plans = plans
             } else {
-                print("No plans found for the user.")
+                print("No plans found for the user. Fetching plans from plan collection.")
+                DispatchQueue.main.async {
+                    self?.planCollectionView.reloadData()
+                }
+                self?.plans = []
             }
         }
     }
+
     
     private func startStepCounting() {
         pedometer.startUpdates(from: Date()) { [weak self] (data, error) in
@@ -372,7 +396,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     // Collection view data source methods
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.collectionView {
             return exercises.count

@@ -13,6 +13,7 @@
         
         var plan: [String: Any]?
         var planID: String?
+        let refreshControl = UIRefreshControl()
         
         let titleLabel: UILabel = {
             let label = UILabel()
@@ -134,20 +135,32 @@
                     print("Error deleting plan: \(error.localizedDescription)")
                 } else {
                     print("Plan deleted successfully")
-                    ActivityIndicator.shared.hide()
-                    
-                    // Navigate to the home screen
-                    self.navigationController?.popToRootViewController(animated: true)
-                    
                     // Refresh the home screen
-                    if let homeViewController = self.navigationController?.viewControllers.first as? HomeViewController {
-                        homeViewController.fetchCustomPlans()
+                    DispatchQueue.main.async {
+                        if let homeViewController = self.navigationController?.viewControllers.first as? HomeViewController {
+                            homeViewController.fetchCustomPlans()
+                        }
+                        self.navigateToRoot()
                     }
                 }
             }
         }
-
         
+        
+        
+        @objc private func refreshData() {
+            
+            refreshControl.endRefreshing()
+            exercisesTableView.reloadData()
+        }
+
+        private func navigateToRoot() {
+            // Navigate to the home screen
+            self.navigationController?.popToRootViewController(animated: true)
+            ActivityIndicator.shared.hide()
+        }
+
+
         private func configureLabels() {
             titleLabel.text = plan?["name"] as? String
             subtitleLabel.text = plan?["description"] as? String
@@ -157,6 +170,10 @@
         private func setupTableView() {
             exercisesTableView.dataSource = self
             exercisesTableView.delegate = self
+            exercisesTableView.addSubview(refreshControl)
+            
+            // Configure the refresh control
+            refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         }
         
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

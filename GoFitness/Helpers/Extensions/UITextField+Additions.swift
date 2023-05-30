@@ -27,7 +27,6 @@ extension UITextField {
         
     }
     
-    
 }
 
 extension UITextView {
@@ -45,6 +44,16 @@ extension UITextView {
         
     }
     
-    
 }
     
+extension UIScrollView {
+    func addPullToRefresh(target: Any, action: Selector) {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(target, action: action, for: .valueChanged)
+        if #available(iOS 10.0, *) {
+            self.refreshControl = refreshControl
+        } else {
+            self.addSubview(refreshControl)
+        }
+    }
+}
