@@ -15,6 +15,7 @@
         var planID: String?
         let refreshControl = UIRefreshControl()
         
+        //setup views
         let titleLabel: UILabel = {
             let label = UILabel()
             label.font = UIFont(name: "IntegralCF-Bold", size: 30)
@@ -114,12 +115,14 @@
             deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)	
         }
         
+        //new button tap handler
         @objc private func newButtonTapped() {
             let exerciseAddViewController = ExerciseAddViewController()
             exerciseAddViewController.plan = self.plan
             navigationController?.pushViewController(exerciseAddViewController, animated: true)
         }
         
+        //delete button handler
         @objc private func deleteButtonTapped() {
             guard let planName = plan?["name"] as? String else {
                 return
@@ -147,20 +150,21 @@
         }
         
         
-        
+        //pull to refresh handling
         @objc private func refreshData() {
             
             refreshControl.endRefreshing()
             exercisesTableView.reloadData()
         }
 
+            
         private func navigateToRoot() {
             // Navigate to the home screen
             self.navigationController?.popToRootViewController(animated: true)
             ActivityIndicator.shared.hide()
         }
 
-
+        //labels text
         private func configureLabels() {
             titleLabel.text = plan?["name"] as? String
             subtitleLabel.text = plan?["description"] as? String

@@ -39,6 +39,7 @@ class TabBarViewController: UITabBarController {
         
         setViewControllers([nav1,nav2,nav3,nav4], animated: false)
         
+        //Tab bar apperance
         let tabColor = UIColor(named: "nav")
         tabBar.layer.backgroundColor = tabColor?.cgColor
         tabBar.overrideUserInterfaceStyle = .dark

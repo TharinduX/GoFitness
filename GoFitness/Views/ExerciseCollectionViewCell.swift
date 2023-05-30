@@ -26,7 +26,7 @@ class ExerciseCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        // Configure the UI elements, add subviews, and set up layout constraints
+
         setupUI()
     }
     

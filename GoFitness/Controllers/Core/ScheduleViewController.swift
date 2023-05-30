@@ -13,6 +13,7 @@ class ScheduleViewController: UIViewController, UITableViewDataSource, UITableVi
 
     private var plans: [[String: Any]] = []
     
+    //Setup views
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "All Schedules"
@@ -69,6 +70,7 @@ class ScheduleViewController: UIViewController, UITableViewDataSource, UITableVi
         planTableView.delegate = self
     }
     
+    //Fetching custom plans for displaying
     private func fetchCustomPlans() {
         FirebaseManager.shared.getCustomPlans { [weak self] plans, error in
             if let error = error {

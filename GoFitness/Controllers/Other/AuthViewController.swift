@@ -221,7 +221,6 @@ class AuthViewController: UIViewController {
     @objc private func loginButtonTapped() {
         ActivityIndicator.shared.show(in: view)
         guard let email = emailTextField.text, let password = passwordTextField.text else {
-            // Handle invalid input
             return
         }
         

@@ -14,7 +14,7 @@ class ExerciseAddViewController: UIViewController,  UIPickerViewDelegate, UIPick
     var plan: [String: Any]?
     var selectedExerciseDocumentID: String?
     
-    
+    //Setup views
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Add Exercises"
@@ -181,7 +181,7 @@ class ExerciseAddViewController: UIViewController,  UIPickerViewDelegate, UIPick
     @objc func doneButtonTapped() {
         view.endEditing(true)
     }
-    
+    // Fetch exercise for the UI picker
     func fetchExercises() {
         FirebaseManager.shared.fetchExercisesFromFirestore { [weak self] (exercises, error) in
             guard let self = self else { return }
@@ -198,6 +198,7 @@ class ExerciseAddViewController: UIViewController,  UIPickerViewDelegate, UIPick
         }
     }
     
+    // Save exercise to the existing plan
     @objc func saveButtonTapped() {
         ActivityIndicator.shared.show(in: view)
         guard let selectedExerciseDocumentID = selectedExerciseDocumentID else {

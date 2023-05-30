@@ -250,6 +250,7 @@ class SignUpViewController: UIViewController {
         }
     }
     
+    //Handling the keyboard - otherwise the text field not visible
     @objc private func keyboardWillShow(_ notification: Notification) {
         guard let keyboardSize = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
             return

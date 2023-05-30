@@ -9,6 +9,7 @@ class ExerciseDetailViewController: UIViewController {
     private var playerViewController: AVPlayerViewController?
     private var player: AVPlayer?
     
+    //Setup views
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "IntegralCF-Bold", size: 24)
@@ -213,7 +214,7 @@ class ExerciseDetailViewController: UIViewController {
         setupButtonTargets()
     }
     
-
+    //add button selectors
     private func setupButtonTargets() {
         startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         stopButton.addTarget(self, action: #selector(stopButtonTapped), for: .touchUpInside)
@@ -222,6 +223,7 @@ class ExerciseDetailViewController: UIViewController {
         spotifyButton.addTarget(self, action: #selector(spotifyButtonTapped), for: .touchUpInside)
     }
     
+    //auto play the video
     private func playVideo() {
         guard let exercise = exercise, let videoURLString = exercise["video"] as? String, let videoURL = URL(string: videoURLString) else {
             return
@@ -250,11 +252,13 @@ class ExerciseDetailViewController: UIViewController {
         updateTimeLabel()
     }
     
+    //looping
     @objc private func playerItemDidReachEnd(_ notification: Notification) {
         player?.seek(to: .zero)
         player?.play()
     }
     
+    //handling spotify button
     @objc private func spotifyButtonTapped() {
         let playlistURLString = "https://open.spotify.com/playlist/12xgLeTIUrC5A6UhjHQoch?si=gR0R9oVDQs-dP_7HEDPf6g"
         if let playlistURL = URL(string: playlistURLString) {
@@ -266,7 +270,7 @@ class ExerciseDetailViewController: UIViewController {
         }
     }
 
-    
+    //timer handling
     @objc private func startButtonTapped() {
         if timer == nil {
             timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateTimeLabel), userInfo: nil, repeats: true)
@@ -284,6 +288,7 @@ class ExerciseDetailViewController: UIViewController {
         updateTimeLabel()
     }
     
+    //show more button handling
     @objc private func showMoreButtonTapped() {
         isDescriptionCollapsed = !isDescriptionCollapsed
         updateDescriptionLabelLayout()

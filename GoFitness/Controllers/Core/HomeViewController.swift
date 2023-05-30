@@ -266,6 +266,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
     }
     
+    // Pull down refresh
     @objc private func refreshData() {
         refreshControl.beginRefreshing()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
@@ -274,6 +275,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    // Top image tap handler
     @objc func imageViewTapped() {
         self.tabBarController?.selectedIndex = 3
         let settingsViewController = SettingsViewController()
@@ -298,6 +300,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
         }
     }
+    
     // Fetch user details from Firebase
     private func fetchUserDetails() {
         FirebaseManager.shared.getUserDetails { [weak self] userDetails, error in
@@ -335,7 +338,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
 
-    
+    //Step counting
     private func startStepCounting() {
         pedometer.startUpdates(from: Date()) { [weak self] (data, error) in
             guard let data = data, error == nil else {
@@ -362,7 +365,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         pedometer.stopUpdates()
     }
     
-    
+    //Greeting updater
     private func updateGreeting() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH"
